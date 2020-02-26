@@ -1,0 +1,109 @@
+<view class="detail_image">
+    <image src="{{detail.TmImageUrl}}"></image>
+    <label>{{detail.TmName}}</label>
+</view>
+<view class="detail_content">
+    <view class="detail_content_item">
+        <view>
+            <label>商标名称</label>
+            <text>{{detail.TmName}}</text>
+        </view>
+    </view>
+     <view class="detail_content_item">
+        <view>
+            <label>商品分类</label>
+            <text>{{detail.TmType}} {{type.title}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>注册号</label>
+            <text>{{detail.TmNo}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>申请日期</label>
+            <text>{{detail.ApplyDate}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>状态</label>
+            <text>{{statusText[detail.TmStatus]}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>使用期限</label>
+            <text>{{detail.ExpiryDate || ""}}</text>
+        </view>
+    </view>
+     <view class="detail_content_item">
+        <view>
+            <label>申请人</label>
+            <text>{{detail.ApplicantCN || ""}}</text>
+        </view>
+    </view>
+     <view class="detail_content_item">
+        <view>
+            <label>申请地址</label>
+            <text>{{detail.ApplicantAddrCN || ""}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item detail_content_item_list">
+        <view>
+            <label>申请流程</label>
+            <view>
+                <block wx:for="{{processCN}}" wx:key="procKey" wx:for-item="process">
+                    <label>
+                        <text>{{process.date}}</text>
+                        <text>{{process.title}}</text>
+                    </label>
+                </block>
+            </view>
+        </view>
+    </view>
+    <view class="detail_content_item detail_content_item_list">
+        <view>
+            <label>商品服务列表</label>
+            <view>
+                <block wx:for="{{detail.GoodsGroup}}" wx:key="goodKey" wx:for-item="good">
+                    <label>
+                        {{good.Name}} ({{good.Code}})
+                    </label>
+                </block>
+            </view>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>初审公告期号</label>
+            <text>{{detail.FirPubIssueNo}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>初审公告日期</label>
+            <text>{{detail.FirPubPageNo}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>注册公告日期</label>
+            <text>{{detail.RegPubDate}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>注册公告期号</label>
+            <text>{{detail.RegPubIssueNo}}</text>
+        </view>
+    </view>
+</view>
+<view bindtap="handleOnShareTap" class="bottom_ct">
+    <button open-type="share" class="detail_btn_share">
+        <image src="/res/share.png"/>
+        <text>分享给</text>
+    </button>
+</view>

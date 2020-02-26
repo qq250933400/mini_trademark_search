@@ -56,6 +56,7 @@ Page({
         if(this.data.searchLikeMode) {
             this.setData({
                 searchLikeMode: false,
+                listData: [],
                 page: 1
             });
             this.actionSearch();
@@ -65,9 +66,9 @@ Page({
         if(!this.data.searchLikeMode) {
             this.setData({
                 searchLikeMode: true,
+                listData: [],
                 page: 1
             });
-            this.data.listData = [];
             this.actionSearch();
         }
     },
@@ -96,7 +97,9 @@ Page({
     },
     handleOnListItemTap: function(evt) {
         const id = evt.currentTarget.dataset.id;
-        console.log(id);
+        wx.navigateTo({
+            url: '/pages/detail/detail?id=' + id,
+        });
     },
     onLoad: function() {
         this.setData({

@@ -15,6 +15,10 @@ module.exports = (app) => {
                 search: {
                     url: "/mini/trademark/search/index",
                     type: "POST"
+                },
+                detail: {
+                    url:"/mini/trademark/search/detail",
+                    type: "POST"
                 }
             }
         }
