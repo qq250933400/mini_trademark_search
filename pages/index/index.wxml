@@ -2,14 +2,20 @@
     <view>
         <view>
             <image src="/res/search.png"></image>
-            <input bindinput="handleOnSearchValueInput" value="{{searchValue}}" placeholder="{{i18n.searchPlaceHolder}}"></input>
+            <input type="text" focus="{{needSetFocus}}" bindinput="handleOnSearchValueInput" value="{{searchValue}}" placeholder="{{i18n.searchPlaceHolder}}"></input>
         </view>
         <button bindtap="bindOnButtonSearchTap">{{i18n.btnText}}</button>
     </view>
 </view>
 <view class="home-nav">
-    <label bindtap="bindSearchSameModeTap" class="{{!searchLikeMode ? 'active': ''}}">{{i18n.menuSameName}}</label>
-    <label bindtap="bindSearchLikeModeTap" class="{{searchLikeMode ? 'active': ''}}">{{i18n.menuLikeName}}</label>
+    <label bindtap="bindSearchSameModeTap" class="{{searchLikeMode == 0 ? 'active': ''}}">
+        <text>{{i18n.menuSameName}}</text>
+        <image src="/res/up.png"></image>
+    </label>
+    <label bindtap="bindSearchLikeModeTap" class="{{searchLikeMode == 1 ? 'active': ''}}">
+        <text>{{i18n.menuLikeName}}</text>
+        <image src="/res/up.png"></image>
+    </label>
     <button bindtap="handleOnShowTypeTap"><image src="/res/types.png"></image></button>
 </view>
 <view class="home-context">
@@ -23,11 +29,12 @@
                 <view>
                     <image src="{{item.TmImageUrl}}"></image>
                     <label>
-                        <text>{{item.TmName}}</text>
-                        <text>{{item.TmNo}}</text>
-                        <text>{{item.ApplicantCN}}</text>
+                        <text class="itemTitle">{{item.TmName}}</text>
+                        <text class="itemNo">{{item.TmNo}}</text>
+                        <text class="itemAL">{{item.ApplicantCN}}</text>
                     </label>
                     <text>{{item.NiceClass}}</text>
+                    <text class="list-status">{{item.tmStatusText}}</text>
                 </view>
             </view>
         </block>
@@ -52,5 +59,14 @@
                 </block>
             </view>
         </view>
+    </view>
+</view>
+
+<view wx:if="{{showLogin}}" class="index_login_div">
+    <view>
+        <button bindtap="handleOnStartLoginTap" open-type="getUserInfo">
+            <image src="/res/logo.jpeg"></image>
+        </button>
+        <label>点击授权登录</label>
     </view>
 </view>

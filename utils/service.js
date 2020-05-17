@@ -1,5 +1,7 @@
 import { Common } from "./common.js";
 
+export const trustKey = "4be3a62151dc4e14a65f6e84a853b639";
+
 export const setServiceConfig = (app, configData) => {
     app.globalData.serviceConfig = configData;
     return configData;
@@ -18,16 +20,26 @@ export class Service extends Common {
         var endPointData = this.getEndPoint(endPoint);
         if (endPointData) {
             return new Promise(function (resolve, reject) {
+                const token = wx.getStorageSync("token");
                 wx.request({
                     url: endPointData.url,
                     header: endPointData.header || {
-                        "content-type": "application/json;charset=utf8;"
+                        "content-type": "application/json;charset=utf8;",
+                        "token": token,
+                        "appKey": trustKey
                     },
                     method: endPointData.type,
                     data: params,
                     dataType: "json",
                     success: function (res) {
                         if(res.statusCode === 200) {
+                            const data = res.data || {};
+                            const app = getApp();
+                            if(data.success === false && data.notLogin) {
+                                wx.removeStorageSync("token");
+                                app.globalData.token = null;
+                                app.globalData.userInfo = null;
+                            }
                             resolve(res.data);
                         } else {
                             reject({

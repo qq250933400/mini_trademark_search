@@ -1,7 +1,10 @@
 {
     "pages": [
-        "pages/index/index",
+        "pages/home/home",
+        "pages/imgList/index",
+        "pages/image/index",
         "pages/detail/detail",
+        "pages/index/index",
         "pages/logs/logs"
     ],
     "window": {

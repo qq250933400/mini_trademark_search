@@ -45,7 +45,6 @@ App({
     ajax: function(endPoint, params) {
         const obj = this.globalData.service;
         obj.setConfig(this.globalData.serviceConfig);
-        console.log(this.globalData.serviceConfig);
         return obj.send(endPoint, params);
     },
     getI18n: function(nodeKey, defaultValue) {

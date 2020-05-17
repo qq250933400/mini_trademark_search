@@ -1,5 +1,5 @@
 // pages/detail/detail.js
-import typesJson from "../../config/types.js";
+import typesJson, { trademarkTmType } from "../../config/types.js";
 const app = getApp();
 Page({
 
@@ -19,11 +19,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        this.data.id = options.id;
+        this.data.id = options.id || "";
         this.loadDetail();
     },
     loadDetail: function() {
-        let type = this.data.detail.TmType;
+        let type = this.data.detail.NiceClass;
         let typeList = this.data.typeData
         let typeData;
         for (let i = 0; i < typeList.length; i++) {
@@ -56,10 +56,34 @@ Page({
         }).then((resp) => {
             wx.hideLoading();
             if(resp.success) {
-                this.setData({
-                    detail: resp.data || {}
-                });
-                this.loadDetail();
+                if(resp.status == 200) {
+                    const detailData = resp.data || {};
+                    detailData.isCommonText = detailData.IsCommon == 1 ? "是" : "否";
+                    detailData.isMadridStatus = detailData.MadridStatus == 1 ? "是" : "否";
+                    detailData.tmTypeText = trademarkTmType[detailData.TmType];
+                    detailData.showNoticeInfo = detailData.NoticeInfo && detailData.NoticeInfo.length > 0;
+                    console.log(detailData.NoticeInfo);
+                    this.setData({
+                        detail: detailData
+                    });
+                    this.loadDetail();
+                } else {
+                    wx.showModal({
+                        title: '',
+                        content: resp.message,
+                        showCancel: false,
+                        confirmText: "返回",
+                        success: () => {
+                            wx.navigateBack({
+                                fail: () => {
+                                    wx.redirectTo({
+                                        url: '/pages/home/home',
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
             } else {
                 wx.showModal({
                     content: resp.message || "获取详情失败，请稍后重试",

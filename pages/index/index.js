@@ -1,8 +1,8 @@
 //index.js
 //获取应用实例
-import typesJson from "../../config/types.js";
+import typesJson, { trademarkStatus } from "../../config/types.js";
 import { StaticCommon } from "../../utils/StaticCommon.js";
-
+import { Common } from "../../utils/common.js";
 const app = getApp()
 
 Page({
@@ -13,14 +13,16 @@ Page({
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         i18n: {},
         listData: [],
-        searchLikeMode: false,
+        searchLikeMode: -1,
         searchValue: "",
         selectType: {},
         typesData: typesJson,
         showTypes: false,
+        showLogin: false,
         page: 1,
         pageSize: 20,
-        pageCount: 0
+        pageCount: 0,
+        needSetFocus: false
     },
     handleOnShowTypeTap: function() {
         this.setData({
@@ -53,9 +55,16 @@ Page({
         }
     },
     bindSearchSameModeTap: function() {
-        if(this.data.searchLikeMode) {
+        if(this.data.searchLikeMode !== 0) {
             this.setData({
-                searchLikeMode: false,
+                searchLikeMode: 0,
+                listData: [],
+                page: 1
+            });
+            this.actionSearch();
+        } else {
+            this.setData({
+                searchLikeMode: -1,
                 listData: [],
                 page: 1
             });
@@ -63,9 +72,16 @@ Page({
         }
     },
     bindSearchLikeModeTap: function () {
-        if(!this.data.searchLikeMode) {
+        if(this.data.searchLikeMode !== 1) {
             this.setData({
-                searchLikeMode: true,
+                searchLikeMode: 1,
+                listData: [],
+                page: 1
+            });
+            this.actionSearch();
+        } else {
+            this.setData({
+                searchLikeMode: -1,
                 listData: [],
                 page: 1
             });
@@ -73,8 +89,10 @@ Page({
         }
     },
     bindOnButtonSearchTap: function(){
-        this.data.page = 1;
-        this.data.listData = [];
+        this.setData({
+            page: 1,
+            listData: []
+        });
         this.actionSearch();
     },
     handleOnSearchValueInput: function(evt){
@@ -90,21 +108,70 @@ Page({
         }
     },
     handleOnMoreTap: function() {
-        if(this.data.page + 1 <= this.data.pageCount) {
-            this.data.page += 1;
+        console.log(this.data.page, this.data.pageCount);
+        if(this.data.page + 1 <= this.data.pageCount+1) {
+            this.setData({
+                page: this.data.page + 1
+            });
             this.actionSearch();
         }
     },
     handleOnListItemTap: function(evt) {
         const id = evt.currentTarget.dataset.id;
+        wx.setStorageSync("searchNamePageData", JSON.stringify(this.data));
         wx.navigateTo({
             url: '/pages/detail/detail?id=' + id,
         });
     },
-    onLoad: function() {
+    onLoad: function(options) {
+        var keyword = options.keyword || "";
+        keyword = decodeURIComponent(keyword);
         this.setData({
-            i18n: app.getI18n("index")
+            i18n: app.getI18n("index"),
+            searchValue: keyword,
+            needSetFocus: options.from === "home"
         });
+    },
+    onUnload: function(){
+        this.setData({
+            needSetFocus: false
+        });
+    },
+    onHide: function() {
+        this.setData({
+            needSetFocus: false
+        });
+    },
+    onShow: function() {
+        const com = new Common();
+        const isLogin = com.checkLogin();
+        let hisListData = wx.getStorageSync("searchNamePageData");
+        let isLoadData = true;
+        let checkData = {};
+        if(!com.isEmpty(hisListData)) {
+            const hisData = JSON.parse(hisListData);
+            this.setData(hisData);
+            checkData = hisData;
+            if(hisData.searchValue !== this.data.searchValue) {
+                isLoadData = true;
+            } else {
+                isLoadData = false;
+            }
+        } else {
+            checkData = this.data;
+        }
+        if (!StaticCommon.isEmpty(checkData.searchValue)) {
+            isLoadData && this.setData({
+                page: 1,
+                listData: []
+            });
+            isLogin && isLoadData && this.actionSearch();
+        }
+        if(!isLogin) {
+            this.setData({
+                showLogin: true
+            });
+        }
     },
     actionSearch: function() {
         const params = {
@@ -133,13 +200,34 @@ Page({
                     const listData = resp.data || [];
                     let oData = this.data.listData || [];
                     oData = JSON.parse(JSON.stringify(oData));
-                    oData.push(...listData);
+                    listData.map((item) => {
+                        item.tmStatusText = trademarkStatus[item.TmStatus];
+                        oData.push(item);
+                    });
                     this.setData({
                         listData: oData,
                         pageCount: Math.ceil(resp.total / this.data.pageSize)
                     });
                 } else {
-                    this.setData({});
+                    const updateState = {};
+                    if(resp.notLogin) {
+                        updateState.showLogin = true;
+                        this.setData(updateState);
+                    } else {
+                        if (this.data.searchLikeMode === 0 && this.data.page === 1) {
+                            wx.showModal({
+                                content: '没有该相同商标，请点击近似商标查看',
+                                showCancel: false,
+                                confirmText: "关闭"
+                            });
+                        } else {
+                            wx.showModal({
+                                title: '没有查询到商标信息，请点击近似商标查看',
+                                showCancel: false,
+                                confirmText: "关闭"
+                            });
+                        }
+                    }
                 }
                 wx.hideLoading();
             }).catch((error) => {
@@ -149,5 +237,13 @@ Page({
                 });
             });
         }
+    },
+    handleOnStartLoginTap:function(){
+        const com = new Common();
+        com.startLogin((token) => {
+            this.setData({
+                showLogin: com.isEmpty(token)
+            });
+        });
     }
 })

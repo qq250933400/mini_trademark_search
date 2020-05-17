@@ -12,7 +12,7 @@
      <view class="detail_content_item">
         <view>
             <label>商品分类</label>
-            <text>{{detail.TmType}} {{type.title}}</text>
+            <text>{{detail.NiceClass}} {{type.title}}</text>
         </view>
     </view>
     <view class="detail_content_item">
@@ -45,10 +45,28 @@
             <text>{{detail.ApplicantCN || ""}}</text>
         </view>
     </view>
-     <view class="detail_content_item">
+    <view class="detail_content_item">
         <view>
             <label>申请地址</label>
             <text>{{detail.ApplicantAddrCN || ""}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>商标类型</label>
+            <text>{{detail.tmTypeText || ""}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>是否共有商标</label>
+            <text>{{detail.isCommonText || ""}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
+            <label>马德里注册</label>
+            <text>{{detail.isMadridStatus || ""}}</text>
         </view>
     </view>
     <view class="detail_content_item detail_content_item_list">
@@ -60,6 +78,21 @@
                         <text>{{process.date}}</text>
                         <text>{{process.title}}</text>
                     </label>
+                </block>
+            </view>
+        </view>
+    </view>
+    <view wx:if="{{detail.showNoticeInfo}}" class="detail_content_item detail_content_item_list">
+        <view>
+            <label>商标公告信息</label>
+            <view>
+                <block wx:for="{{detail.NoticeInfo}}" wx:key="noticeKey" wx:for-item="notice">
+                    <view class="NoticeItemInfo">
+                        <label>公告发布日期：{{notice.Date}}</label>
+                        <label>商标公告期号：第{{notice.Issue}}期</label>
+                        <label>公告名称：{{notice.Name}}</label>
+                        <label>公告页码：第{{notice.Page}}页</label>
+                    </view>
                 </block>
             </view>
         </view>

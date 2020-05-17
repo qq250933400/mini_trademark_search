@@ -1,0 +1,101 @@
+/* pages/home/home.wxss */
+page{
+    background: rgb(246,206,70);
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.home_back {
+    display: block;
+    width: 100%;
+    margin-top: 10%;
+    opacity: 0.6;
+}
+
+.home_content {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.home_title {
+    display: block;
+    margin: 0 auto;
+    margin-top: 30%;
+    width: 40%;
+}
+
+.home_logo {
+    display: block;
+    margin: 0 auto;
+    margin-top: 50%;
+    width: 25%;
+}
+.home_search {
+    display: block;
+    height: 36pt;
+    width: 80%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 18pt;
+    padding: 5pt;
+    box-sizing: border-box;
+    margin-top: 5pt;
+}
+.home_search>view {
+    box-sizing: border-box;
+    white-space: nowrap;
+    padding-left: 10pt;
+}
+.home_search>view>image {
+    display: inline-block;
+    vertical-align: middle;
+    width: 14pt;
+    height: 14pt;
+    margin-top: 6pt;
+    opacity: 0.7;
+}
+.home_search>view>label {
+    display: inline-block;
+    padding-left: 2pt;
+    vertical-align: middle;
+    height: 18pt;
+    line-height: 26pt;
+    font-size: 10pt;
+    color:#9B9B9B;
+}
+.home_search_tab_text>text,
+.home_search_tab_text{
+    color:#fff !important;
+}
+.home_search_tab_text>image{
+    width: 10pt !important;
+}
+.home_search_tab {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 30pt;
+}
+.home_search_tab>label>image {
+    display: inline-block;
+    width: 12pt;
+    vertical-align: middle;
+}
+.home_search_tab>label>text{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 10pt;
+    padding-left: 4pt;
+    color:#333;
+}
+.home_search_tab>label {
+    display: inline-block;
+    padding-right: 10pt;
+}

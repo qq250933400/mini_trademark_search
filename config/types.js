@@ -1,3 +1,17 @@
+export const trademarkStatus = {
+    0: "未公告",
+    1: "已初审",
+    2: "已注册",
+    3: "已无效"
+};
+
+export const trademarkTmType = {
+    1: "普通商标",
+    2: "集体商标",
+    3: "证明商标"
+};
+
+
 export default [
     {
         "id": 1,

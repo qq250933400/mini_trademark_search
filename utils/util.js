@@ -18,7 +18,19 @@ const formatNumber = n => {
     return n[1] ? n : '0' + n
 }
 
+const toQuery = (obj) => {
+    const result = [];
+    for(var key in obj) {
+        if(obj[key]) {
+            var val = encodeURIComponent(obj[key].toString());
+            result.push(key+"=" + val);
+        }
+    }
+    return result.join("&");
+}
+
 module.exports = {
     formatTime: formatTime,
-    getValue: StaticCommon.getValue
+    getValue: StaticCommon.getValue,
+    toQuery
 }

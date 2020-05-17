@@ -1,0 +1,24 @@
+<image mode="widthFix" class="home_back" src="/res/home_back.png"></image>
+<view class="home_content">
+    <image mode="widthFix" class="home_title" src="/res/home_title.png"></image>
+    <view class="home_search_tab" >
+        <label bindtap="handleOnHomeSearch" class="home_search_tab_text"><image mode="widthFix" src="/res/text.png"></image><text>文字查询</text></label>
+        <label bindtap="handleOnImageSearchTap"><image mode="widthFix" src="/res/camera.png"></image><text>图片查询</text></label>
+    </view>
+    <view bindtap="handleOnHomeSearch" class="home_search">
+        <view>
+            <image src="/res/search.png"></image>
+            <label>可输入商标名称，注册号，申请人</label>
+        </view>
+    </view>
+    <image mode="widthFix" class="home_logo" src="/res/home_logo.png"></image>
+</view>
+
+<view wx:if="{{showLogin}}" class="index_login_div">
+    <view>
+        <button bindtap="handleOnStartLoginTap" open-type="getUserInfo">
+            <image src="/res/logo.jpeg"></image>
+        </button>
+        <label>点击授权登录</label>
+    </view>
+</view>

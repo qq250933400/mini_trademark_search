@@ -376,8 +376,8 @@ var StaticCommon = /** @class */ (function () {
         };
         return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4());
     };
-    StaticCommon.getUri = function () {
-        var str = location.search || "";
+    StaticCommon.getUri = function (strValue) {
+        var str = strValue || "";
         var strArr = [];
         var result = {};
         str = str.replace(/^\?/, "").replace(/\#[\s\S]*$/, "");
@@ -387,7 +387,7 @@ var StaticCommon = /** @class */ (function () {
             var tmpItem = strArr[key] || "";
             var tmpM = tmpItem.match(/^\s*([\S]*)\s*=\s*([\S]*)$/);
             if (tmpM) {
-                result[tmpM[1]] = tmpM[2];
+                result[tmpM[1]] = !StaticCommon.isEmpty(tmpM[2]) ? decodeURIComponent(tmpM[2]) : "";
             }
         }
         return result;
@@ -395,6 +395,16 @@ var StaticCommon = /** @class */ (function () {
     StaticCommon.getQuery = function (key) {
         return StaticCommon.getUri()[key];
     };
+    StaticCommon.toQuery = function(obj){
+        const result = [];
+        for (var key in obj) {
+            if (obj[key]) {
+                var val = encodeURIComponent(obj[key].toString());
+                result.push(key + "=" + val);
+            }
+        }
+        return result.join("&");
+    }
     return StaticCommon;
 }());
 exports.StaticCommon = StaticCommon;
