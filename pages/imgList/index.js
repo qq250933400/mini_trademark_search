@@ -15,7 +15,8 @@ Page({
         pageCount: 0,
         total: 0,
         fromLocal: false,
-        listData: []
+        listData: [],
+        showMore: false
     },
 
     /**
@@ -72,13 +73,14 @@ Page({
     },
     loadData: function(page, fn) {
         const app = getApp();
+        const searchPage = page || 1;
         wx.showLoading({
             title: '查询数据',
         });
         app.ajax("trademark.searchImage", {
             imageName: this.data.image,
             intcls: this.data.intCls,
-            page: page || 1,
+            page: searchPage,
             pageSize: this.data.pageSize
         }).then((resp) => {
             wx.hideLoading();
@@ -86,15 +88,24 @@ Page({
                 const listData = com.getValue(resp, "Content.data") || [];
                 const total = com.getValue(resp, "Content.sum");
                 const pageCount = Math.ceil(total / this.data.pageSize);
+                const saveListData = JSON.parse(JSON.stringify(this.data.listData));
                 listData.map((item) => {
                     item.tmStatusText = trademarkStatus[item.TmStatus];
+                    saveListData.push(item);
                 });
                 this.setData({
                     pageCount,
                     total,
-                    listData
+                    listData: saveListData,
+                    showMore: searchPage + 1 <= pageCount
                 });
                 typeof fn === "function" && fn();
+            } else {
+                wx.showModal({
+                    title: '',
+                    content: resp.Text + "[" + resp.Status + "]",
+                    confirmText: "关闭"
+                });
             }
             console.log(resp);
         }).catch((error) => {

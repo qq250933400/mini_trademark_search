@@ -175,7 +175,7 @@ page{
     line-height: 26pt;
     text-align: center;
     font-size: 12pt;
-    color:#acacac;
+    color:#27a3eb;
     padding: 10pt 0;
     padding-bottom: 15pt;
 }

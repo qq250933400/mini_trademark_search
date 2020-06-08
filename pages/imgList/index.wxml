@@ -24,6 +24,6 @@
                 </view>
             </view>
         </block>
-        <label wx:if="{{page<pageCount}}" bindtap="handleOnMoreTap">点击查看更多</label>
+        <label wx:if="{{showMore}}" bindtap="handleOnMoreTap">点击查看更多</label>
     </view>
 </view>
