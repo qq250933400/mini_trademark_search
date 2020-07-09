@@ -53,6 +53,12 @@
     </view>
     <view class="detail_content_item">
         <view>
+            <label>代理商</label>
+            <text>{{detail.AgentName || ""}}</text>
+        </view>
+    </view>
+    <view class="detail_content_item">
+        <view>
             <label>商标类型</label>
             <text>{{detail.tmTypeText || ""}}</text>
         </view>
