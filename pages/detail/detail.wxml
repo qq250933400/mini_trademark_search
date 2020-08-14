@@ -39,8 +39,8 @@
             <text>{{detail.ExpiryDate || ""}}</text>
         </view>
     </view>
-     <view class="detail_content_item">
-        <view>
+     <view class="detail_content_item detail_content_item_link">
+        <view ontap="onGoSearch" data-agent="{{detail.ApplicantCN}}">
             <label>申请人</label>
             <text>{{detail.ApplicantCN || ""}}</text>
         </view>

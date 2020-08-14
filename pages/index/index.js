@@ -129,7 +129,8 @@ Page({
         this.setData({
             i18n: app.getI18n("index"),
             searchValue: keyword,
-            needSetFocus: options.from === "home"
+            from: options.from,
+            needSetFocus: options.from === "home" || (options.from === "detail" && !StaticCommon.isEmpty(keyword))
         });
     },
     onUnload: function(){
@@ -145,27 +146,34 @@ Page({
     onShow: function() {
         const com = new Common();
         const isLogin = com.checkLogin();
-        let hisListData = wx.getStorageSync("searchNamePageData");
-        let isLoadData = true;
-        let checkData = {};
-        if(!com.isEmpty(hisListData)) {
-            const hisData = JSON.parse(hisListData);
-            this.setData(hisData);
-            checkData = hisData;
-            if(hisData.searchValue !== this.data.searchValue) {
-                isLoadData = true;
-            } else {
-                isLoadData = false;
-            }
+        if(this.data.from === "detail" && !StaticCommon.isEmpty(this.data.searchValue)) {
+            this.actionSearch();
+            wx.setStorageSync('searchNamePageData', null);
+            console.log("search-value");
+            console.log(this.data.searchValue, this.data.from);
         } else {
-            checkData = this.data;
-        }
-        if (!StaticCommon.isEmpty(checkData.searchValue)) {
-            isLoadData && this.setData({
-                page: 1,
-                listData: []
-            });
-            isLogin && isLoadData && this.actionSearch();
+            let hisListData = wx.getStorageSync("searchNamePageData");
+            let isLoadData = true;
+            let checkData = {};
+            if(!com.isEmpty(hisListData)) {
+                const hisData = JSON.parse(hisListData);
+                this.setData(hisData);
+                checkData = hisData;
+                if(hisData.searchValue !== this.data.searchValue) {
+                    isLoadData = true;
+                } else {
+                    isLoadData = false;
+                }
+            } else {
+                checkData = this.data;
+            }
+            if (!StaticCommon.isEmpty(checkData.searchValue)) {
+                isLoadData && this.setData({
+                    page: 1,
+                    listData: []
+                });
+                isLogin && isLoadData && this.actionSearch();
+            }
         }
         if(!isLogin) {
             this.setData({

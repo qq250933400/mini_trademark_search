@@ -1,5 +1,6 @@
 // pages/detail/detail.js
 import typesJson, { trademarkTmType } from "../../config/types.js";
+import { StaticCommon } from "../../utils/StaticCommon";
 const app = getApp();
 Page({
 
@@ -97,6 +98,14 @@ Page({
             wx.hideLoading();
             console.error(err);
         });
+    },
+    onGoSearch: function(evt) {
+        const agentName = evt.currentTarget.dataset.agent;
+        if(!StaticCommon.isEmpty(agentName)) {
+            wx.navigateTo({
+              url: '/pages/index/index?keyword=' + encodeURIComponent(agentName) + "&from=detail",
+            });
+        }
     },
     /**
      * 生命周期函数--监听页面初次渲染完成

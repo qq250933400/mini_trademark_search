@@ -111,3 +111,6 @@
     padding-left: 6pt;
     font-size: 12pt !important;
 }
+.detail_content_item_link text {
+    color: rgba(30, 153, 224, 0.753) !important;
+}
