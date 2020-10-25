@@ -1,6 +1,8 @@
 {
     "pages": [
         "pages/home/home",
+        "pages/types/types",
+        "pages/typesDetail/typesDetail",
         "pages/imgList/index",
         "pages/image/index",
         "pages/detail/detail",

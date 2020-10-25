@@ -27,6 +27,18 @@ module.exports = (app) => {
                 searchImage: {
                     url: "/min/trademark/search/image",
                     type: "POST"
+                },
+                register: {
+                    url: "/min/trademark/index/register",
+                    type: "POST"
+                },
+                searchType: {
+                    url: "/mini/trademark/search/types",
+                    type: "POST"
+                },
+                searchSubTypes: {
+                    url: "/min/trademark/search/subTypes",
+                    type: "POST"
                 }
             }
         }

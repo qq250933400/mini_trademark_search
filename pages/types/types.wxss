@@ -1,0 +1,198 @@
+page {
+    min-height: 100%;
+    display: block;
+    background: #f6f6f6;
+}
+.search-page {
+    background: #f6f6f6;
+    min-height: 100%;
+    display: block;
+}
+.classify .form-box {
+	padding: 0.32rem 0.4rem;
+}
+
+.classify .form-box .form {
+	margin: 0 auto;
+	width: 9.2rem;
+}
+
+.classify .form-box .input {
+	padding: 0.247rem 0.32rem;
+	width: 7.573333rem;
+	font-size: 0.346667rem;
+	border: none;
+}
+
+.classify .form-box .btn-submit {
+	width: 0.986667rem;
+	height: 0.96rem;
+	background: #fff;
+	border: none;
+}
+
+.classify .form-box .btn-submit .iconfont {
+	font-size: 0.346667rem;
+}
+
+.search-input {
+    display: block;
+    width: 95%;
+    margin: 10pt auto;
+    background: #fff;
+    border-radius: 4pt;
+    box-sizing: border-box;
+    position: relative;
+    height: 36pt;
+    padding-right: 60pt;
+    overflow: hidden;
+}
+.search-input input {
+    width: 100%;
+    height: 36pt;
+    box-sizing: border-box;
+    padding: 5pt 10pt;
+}
+.search-input .search-button {
+    display: block;
+    width: 32pt;
+    height: 32pt;
+    position: absolute;
+    right: 0;
+    top: 4pt;
+    background: #fff;
+    text-align: center;
+    padding: 0;
+    box-sizing: border-box;
+}
+.search-input .search-button image {
+    width: 20pt;
+    display: block;
+    margin: 0 auto;
+    margin-top: 5pt;
+}
+
+.mainTypes {
+    display: block;
+    background: #fff;
+    padding: 10pt;
+}
+.mainTypes>view {
+    display: block;
+    width: 250pt;
+    margin: 0 auto;
+}
+.mainTypes>view>view {
+    display: inline-block;
+    padding: 5pt;
+    margin-right: 5pt;
+    margin-top: 5pt;
+    font-size: 10pt;
+    border: 1px solid #42d7fc;
+    box-sizing: border-box;
+    width: 68pt;
+}
+@media screen and (max-width: 411px) {
+    .mainTypes>view {
+        width: 98%;
+    }
+    .mainTypes>view>view {
+        margin-right: 3pt;
+        margin-top: 3pt;
+    }
+}
+@media screen and (min-width: 412px) {
+    .mainTypes>view {
+        width: 98%;
+    }
+    .mainTypes>view>view {
+        margin-right: 3pt;
+        margin-top: 3pt;
+    }
+}
+@media screen and (max-width: 375px) {
+    .mainTypes>view {
+        width: 90%;
+    }
+    .mainTypes>view>view {
+        margin-right: 10pt;
+        margin-top: 10pt;
+    }
+}
+@media screen and (max-width: 320px) {
+    .mainTypes>view {
+        width: 98%;
+    }
+    .mainTypes>view>view {
+        margin-right: 2pt;
+        margin-top: 2pt;
+    }
+}
+.applyIndustrySearchList {
+    display: block;
+    background: #fff;
+    padding: 20px !important;
+    font-size: 0.4rem;
+}
+
+.applyIndustrySearchList>.li {
+    margin: 0 !important;
+}
+
+.applyIndustrySearchList>.li>label {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px dashed #D8D8D8;
+    color: #333;
+}
+
+.applyIndustrySearchList>.li>.li-list {
+    margin-left: 10px;
+}
+
+.applyIndustrySearchList>.li>.li-list>.li-list-li>label {
+    display: block;
+    padding: 10px 0;
+    color: #333;
+}
+
+.applyIndustrySearchList>.li>.li-list>.li-list-li>.li-list-li-subList {
+    margin-left: 35px;
+}
+
+.applyIndustrySearchList>.li>.li-list>.li-list-li>.li-list-li-subList>view {
+    display: block;
+    padding: 5px 0;
+    color: #333;
+}
+
+.mobilePageSwitch {
+    display: inline-block;
+    padding: 0.2rem;
+    text-align: center;
+    font-size: 0.3rem;
+    vertical-align: middle;
+}
+
+.mobilePageArea {
+    display: block;
+    position: relative;
+    font-size: 0;
+    text-align: center;
+}
+.mobilePageArea>label {
+    font-size: 12px;
+    color: #656565;
+    font-weight: normal;
+    display: block;
+    padding: 10pt 0;
+    text-align:center;
+}
+
+.NoResultResponse {
+    display: block;
+    text-align: center;
+    font-size: 14pt;
+    color: #e2e2e2;
+    padding: 40pt 0;
+}
