@@ -1,0 +1,63 @@
+/* pages/home/home.wxss */
+page{
+    background: rgb(246,206,70);
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.home_back {
+    display: block;
+    width: 100%;
+    margin-top: 10%;
+    opacity: 0.6;
+}
+
+.home_content {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.image_home_logo {
+    display: block;
+    margin: 0 auto;
+    margin-top: 50%;
+    width: 25%;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -12%;
+}
+
+.image_search {
+    display: block;
+    width: 120pt;
+    margin: 0 auto;
+    margin-top: 10%;
+}
+.image_search>label{
+    display: block;
+    text-align: center;
+    padding: 20pt 0;
+    font-size: 15pt;
+    color:#666;
+}
+.image_search>image{
+    width: 100%;
+}
+.image_search>view{
+    display: block;
+    margin-top: 4pt;
+    padding: 5pt 0pt;
+    text-align: center;
+    color:#fff;
+    border: 1px solid #fff;
+    border-radius: 5pt;
+}
+.image_search>button {
+    width: 100% !important;
+    margin-top: 20pt;
+}

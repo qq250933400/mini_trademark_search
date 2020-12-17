@@ -1,0 +1,20 @@
+{
+    "pages": [
+        "pages/home/home",
+        "pages/types/types",
+        "pages/typesDetail/typesDetail",
+        "pages/imgList/index",
+        "pages/image/index",
+        "pages/detail/detail",
+        "pages/index/index",
+        "pages/logs/logs"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "商标查询",
+        "navigationBarTextStyle": "black"
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
+}

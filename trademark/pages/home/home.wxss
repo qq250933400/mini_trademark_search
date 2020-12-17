@@ -1,0 +1,273 @@
+/* pages/home/home.wxss */
+page{
+    background: rgb(246,206,70);
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.home_back {
+    display: block;
+    width: 100%;
+    margin-top: 10%;
+    opacity: 0.6;
+}
+
+.home_content {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.home_title {
+    display: block;
+    margin: 0 auto;
+    margin-top: 30%;
+    width: 40%;
+}
+
+.home_logo {
+    display: block;
+    margin: 0 auto;
+    width: 25%;
+}
+.home_search {
+    display: block;
+    height: 36pt;
+    width: 80%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 18pt;
+    padding: 5pt;
+    box-sizing: border-box;
+    margin-top: 5pt;
+}
+.home_search>view {
+    box-sizing: border-box;
+    white-space: nowrap;
+    padding-left: 10pt;
+}
+.home_search>view>image {
+    display: inline-block;
+    vertical-align: middle;
+    width: 14pt;
+    height: 14pt;
+    margin-top: 6pt;
+    opacity: 0.7;
+}
+.home_search>view>label {
+    display: inline-block;
+    padding-left: 2pt;
+    vertical-align: middle;
+    height: 18pt;
+    line-height: 26pt;
+    font-size: 10pt;
+    color:#9B9B9B;
+}
+.home_search_tab_text>text,
+.home_search_tab_text{
+    color:#fff !important;
+}
+.home_search_tab_text>image{
+    width: 10pt !important;
+}
+.home_search_tab {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 30pt;
+}
+.home_search_tab>label>image {
+    display: inline-block;
+    width: 12pt;
+    vertical-align: middle;
+}
+.home_search_tab>label>text{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 10pt;
+    padding-left: 4pt;
+    color:#333;
+}
+.home_search_tab>label {
+    display: inline-block;
+    padding-right: 10pt;
+}
+.home_icon_button {
+    display: block;
+    text-align: center;
+    margin-top: 20pt;
+}
+.home_icon_button>button {
+    display: inline-block;
+    width: 20vw !important;
+    height: 20vw !important;
+    margin-left: 5pt;
+    padding: 0;
+    background: transparent;
+}
+.home_icon_button>button>image {
+    width: 100%;
+    height: 100%;
+}
+
+/*-----popup for submit register information----*/
+.trademark_Register {
+    display: block;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.4);
+}
+.trademark_Register>view {
+    display: block;
+    width: 70vw;
+    height: 260pt;
+    background: #fff;
+    position: relative;
+    margin: 0 auto;
+    top: calc((100% - 260pt) / 2 - 20pt);
+    border-radius: 10pt;
+    padding: 10pt;
+}
+.trademark_Register>view>.trademark_content {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.TR_title {
+    display: block;
+    text-align: center;
+    font-size: 13pt;
+    color: #666;
+}
+.TR_subtitle {
+    display: block;
+    font-size: 10pt;
+    text-align: center;
+    line-height: 30pt;
+    color: #999;
+}
+.TR_subtitle label {
+    color: #0da5e0;
+}
+.TR_form {
+    display: block;
+    width: 80%;
+    border-top: 1px solid #d2d2d2;
+    margin: 0 auto;
+}
+.TR_form>label {
+    display: block;
+    text-align: center;
+    font-size: 12pt;
+    line-height: 40pt;
+    color: #666;
+    margin-top: 10pt;
+}
+.TR_form>.TR_form_input {
+    display: block;
+    height: 36pt;
+    background: #efefef;
+    margin-top: 5pt;
+    border-radius: 25pt;
+    padding-left: 40pt;
+    position: relative;
+    padding-top: 1px;
+}
+.TR_form>.TR_form_input>label {
+    display: block;
+    width: 50pt;
+    height: 36pt;
+    line-height: 40pt;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 10pt;
+    color: rgb(151, 149, 149);
+}
+.TR_form>.TR_form_input>input {
+    display: block;
+    width: 90%;
+    height: 22pt;
+    padding: 0;
+    margin-top: 7pt;
+}
+.TR_form+button {
+    background: rgb(247,211,76);
+    box-sizing: border-box;
+    padding: 5pt;
+    border-radius: 30pt;
+    font-weight: normal;
+    font-size: 12pt;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20pt;
+    width: 80pt;
+
+}
+.TR_Close {
+    display: block;
+    width: 30pt;
+    position: relative;
+    left: 50%;
+    margin-left: -15pt;
+}
+.TR_Close>label {
+    display: block;
+    margin: 0 auto;
+    width: 1pt;
+    height: 30pt;
+    background: #fff;
+}
+.TR_Close>image {
+    display: block;
+    margin: 0 auto;
+    width: 26pt;
+    height: 26pt;
+}
+.homeCopyRight {
+    display: block;
+    font-size: 8pt;
+    text-align:center;
+    padding: 4pt 0;
+}
+.homeCopyRightArea {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 5%;
+}
+@keyframes showRegAni {
+    0% {
+        transform: scale(0.7, 0.7);
+        opacity: 0.2;
+    }
+    60% {
+        transform: scale(1,1);
+        opacity: 0.7;
+    }
+    80% {
+        transform: scale(1.1,1.1);
+        opacity:0.9;
+    }
+    100% {
+        transform: scale(1,1);
+        opacity: 1;
+    }
+}
+
+.animationshowReg {
+    animation: showRegAni 0.3s ease-in;
+}

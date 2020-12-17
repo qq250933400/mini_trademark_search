@@ -1,0 +1,16 @@
+<image mode="widthFix" class="home_back" src="/res/home_back.png"></image>
+<view class="home_content">
+    <view class="image_search">
+        <label>图形查询</label>
+        <image bindtap="handleOnUploadTap" mode="widthFix" src="{{imageFile}}"></image>
+        <view>
+            <picker mode="selector" bindchange="bindPickerChange" value="{{index}}" range-key="name" range="{{typeSourceData}}">
+                <view class="picker">
+                {{typeSourceData[index].name}}
+                </view>
+            </picker>
+        </view>
+        <button bindtap="handleOnImageSearch">立刻查询</button>
+    </view>
+    <image mode="widthFix" class="image_home_logo" src="/res/home_logo.png"></image>
+</view>

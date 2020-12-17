@@ -1,0 +1,15 @@
+<view class="container detail">
+    <view class="sons" wx:if="{{listData && listData.length > 0}}">
+        <view class="top">{{classify.code}}  {{classify.title}}</view>
+        <view class="empty"></view>
+        <view class="main">
+            <view class="subject">群组信息</view>
+            <view class="items">
+                <block wx:for="{{listData}}" wx:for-item="item" wx:key="formItem">
+                    <label bindtap="handleOnSearchSubItem" data-code="{{item.code}}" class="item {{item.code.length < 5 ? '' : 'normal'}}">【{{item.code}}】{{item.title}}</label>
+                </block>
+            </view>
+        </view>
+    </view>
+    <label wx:if="{{!listData || listData.length<=0}}" class="NoResultResponse">查询不到结果</label>
+</view>

@@ -1,0 +1,46 @@
+<view class="search-page">
+    <image src="/res/mobile_wrapper2.png" mode="widthFix" style="display: block;width: 100%;"/>
+    <view class="search-input">
+        <input type="text" confirm-type="Search" bindconfirm="handleOnSearchConfirm" bindinput="handleOnSearchInput" class="input block fl" name="keyword" value="{{keyword}}" placeholder="请输入......"/>
+        <button class="search-button" type="button" bindtap="handleOnSearch">
+            <image src="/res/icon_search_2.png" mode="widthFix" />
+        </button>
+    </view>
+    <view wx:if="{{!showSearch}}" class="mainTypes">
+        <view>
+            <block wx:for="{{dataTypes}}"  wx:for-item="item" wx:key="index">
+                <view bindtap="onGoTypeList" data-code="{{item.code}}">
+                    <text>{{item.code}} {{item.title}}</text>
+                </view>
+            </block>
+        </view>
+    </view>
+    <view wx:if="{{showSearch}}" class="applyIndustrySearchList">
+        <block wx:for="{{searchList}}" wx:for-item="myItem" wx:key="searchResult">
+            <view class="li">
+                <label>第{{myItem.code}}类  {{myItem.title}}</label>
+                <view class="li-list">
+                    <block wx:for="{{myItem.children}}" wx:for-item="subItem" wx:key="subItemKey">
+                        <view class="li-list-li">
+                            <label>[{{subItem.code}}] {{subItem.title}}</label>
+                            <view class="li-list-li-subList">
+                                <block  wx:for="{{subItem.children}}" wx:for-item="dType" wx:key="dTypeKey">
+                                    <view>
+                                        <text>{{dType.code}}</text>
+                                        <block wx:for="{{dType.linkTitle}}" wx:for-item="dTitle" wx:key="dTitleKey">
+                                            <text style="color:{{dTitle.color}};">{{dTitle.value}}</text>
+                                        </block>
+                                    </view>
+                                </block>
+                            </view>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </block>
+        <label wx:if="{{!searchList || searchList.length<=0}}" class="NoResultResponse">查询不到结果</label>
+    </view>
+    <view wx:if="{{ showSearch && pageCount > page }}" class="mobilePageArea">
+        <label bindtap="onNextPage">下一页</label>
+    </view>
+</view> 

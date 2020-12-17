@@ -1,0 +1,116 @@
+.detail_image {
+    display: block;
+    padding: 20pt 0;
+    background: rgb(246,206,70);
+    padding-bottom: 5pt;
+}
+.detail_image>image {
+    display: block;
+    height: 80pt;
+    width: 90pt;
+    margin: 0 auto;
+}
+.detail_image>label {
+    display: block;
+    text-align: center;
+    padding: 10pt 0;
+    font-size: 15pt;
+    font-weight: bold;
+}
+.detail_content {
+    display: block;
+    padding: 0 20pt;
+    padding-bottom: 60pt;
+}
+.detail_content .detail_content_item {
+    display: block;
+    padding: 8pt 0;
+    border-bottom: 1px solid #ddd;
+}
+.detail_content .detail_content_item>view{
+    display: block;
+    position: relative;
+    padding-left: 30%;
+}
+.detail_content .detail_content_item>view>label {
+    display: block;
+    position: absolute;
+    height:24pt;
+    line-height: 24pt;
+    left: 0;
+    top: 0;
+    color:#9b9b9b;
+}
+.detail_content .detail_content_item>view>text {
+    display: block;
+    text-align: right;
+    color:rgb(74,74,74);
+    min-height:24pt;
+    line-height: 24pt;
+}
+.detail_content .detail_content_item_list>view{
+    padding-left: 0;
+}
+.detail_content .detail_content_item_list>view>label {
+    position: relative;
+    font-weight: bold;
+    color:#000;
+}
+.detail_content .detail_content_item_list>view>view{
+    display: block;
+    position: relative;
+}
+.detail_content .detail_content_item_list>view>view>label,
+.detail_content .detail_content_item_list>view>view>.NoticeItemInfo>label {
+    display: block;
+    padding: 5pt 0;
+    color:#5c5c5c;
+}
+.detail_content .detail_content_item_list>view>view>.NoticeItemInfo {
+    border-bottom: 1px solid #ddd;
+    padding: 15pt 0;
+}
+.detail_content .detail_content_item_list>view>view>.NoticeItemInfo:last-child{
+    border: none !important;
+}
+.detail_content .detail_content_item_list>view>view>label>text,
+.detail_content .detail_content_item_list>view>view>.NoticeItemInfo>label>text {
+    display: block;
+    font-size:12pt;
+}
+.bottom_ct {
+    display: block;
+    left:0;
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+.detail_btn_share {
+    display: block;
+    position: relative;
+    bottom: 15pt;
+    width: 100pt !important;
+    height: 40pt;
+    line-height: 30pt;
+    background: rgb(247,211,76);
+    box-sizing: border-box;
+    padding: 5pt;
+    border-radius: 30pt;
+    opacity: 0.9;
+}
+.detail_btn_share>image {
+    display: inline-block;
+    width: 10pt;
+    height: 14pt;
+    vertical-align: middle;
+}
+.detail_btn_share>text{
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 6pt;
+    font-size: 12pt !important;
+}
+.detail_content_item_link text {
+    color: rgba(30, 153, 224, 0.753) !important;
+}
