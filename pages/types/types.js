@@ -75,6 +75,7 @@ Page({
         if(evt.detail.keyCode == 13) {
             this.handleOnSearch();
         }
+        console.log(evt.detail);
     },
     handleOnSearch: function(page) {
         if(!StaticCommon.isEmpty(this.data.keyword)) {
@@ -90,7 +91,6 @@ Page({
                 if(/^200$/.test(resp.statusCode)) {
                     const resultListData = resp.data.listData || {};
                     let displayList = JSON.parse(JSON.stringify(this.data.searchList));
-                    console.log(resultListData);
                     if(myPage > 1) {
                         Object.keys(resultListData).map((tKey) => {
                             if(displayList[tKey]) {
@@ -122,9 +122,12 @@ Page({
         } else {
             this.setData({
                 searchList: [],
-                showSearch: true
+                showSearch: false
             });
         }
+    },
+    handleOnSearchConfirm: function() {
+        this.handleOnSearch();
     },
     onNextPage: function() {
         if(this.data.page < this.data.pageCount) {

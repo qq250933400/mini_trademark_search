@@ -1,7 +1,7 @@
 <view class="search-page">
     <image src="/res/mobile_wrapper2.png" mode="widthFix" style="display: block;width: 100%;"/>
     <view class="search-input">
-        <input type="search" bindinput="handleOnSearchInput" class="input block fl" name="keyword" value="{{keyword}}" placeholder="请输入......"/>
+        <input type="text" confirm-type="Search" bindconfirm="handleOnSearchConfirm" bindinput="handleOnSearchInput" class="input block fl" name="keyword" value="{{keyword}}" placeholder="请输入......"/>
         <button class="search-button" type="button" bindtap="handleOnSearch">
             <image src="/res/icon_search_2.png" mode="widthFix" />
         </button>

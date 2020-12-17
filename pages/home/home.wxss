@@ -31,7 +31,6 @@ page{
 .home_logo {
     display: block;
     margin: 0 auto;
-    margin-top: 50%;
     width: 25%;
 }
 .home_search {
@@ -237,8 +236,19 @@ page{
     width: 26pt;
     height: 26pt;
 }
-
-
+.homeCopyRight {
+    display: block;
+    font-size: 8pt;
+    text-align:center;
+    padding: 4pt 0;
+}
+.homeCopyRightArea {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 5%;
+}
 @keyframes showRegAni {
     0% {
         transform: scale(0.7, 0.7);

@@ -132,7 +132,7 @@ page {
     display: block;
     background: #fff;
     padding: 20px !important;
-    font-size: 0.4rem;
+    font-size: 10pt;
 }
 
 .applyIndustrySearchList>.li {
@@ -157,7 +157,7 @@ page {
 }
 
 .applyIndustrySearchList>.li>.li-list>.li-list-li>.li-list-li-subList {
-    margin-left: 35px;
+    margin-left: 20pt;
 }
 
 .applyIndustrySearchList>.li>.li-list>.li-list-li>.li-list-li-subList>view {
@@ -170,7 +170,7 @@ page {
     display: inline-block;
     padding: 0.2rem;
     text-align: center;
-    font-size: 0.3rem;
+    font-size: 10pt;
     vertical-align: middle;
 }
 
@@ -179,9 +179,10 @@ page {
     position: relative;
     font-size: 0;
     text-align: center;
+    padding-bottom: 15pt;
 }
 .mobilePageArea>label {
-    font-size: 12px;
+    font-size: 12pt;
     color: #656565;
     font-weight: normal;
     display: block;

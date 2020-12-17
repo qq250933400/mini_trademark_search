@@ -25,7 +25,10 @@
             <image bindtap="handleOnTypes" mode="widthFix" src="/res/icon_types.png" />
         </button>
     </view>
-    <image mode="widthFix" class="home_logo" src="/res/home_logo.png"></image>
+    <view class="homeCopyRightArea">
+        <image mode="widthFix" class="home_logo" src="/res/home_logo.png"></image>
+        <label class="homeCopyRight">天一商标监制</label>
+    </view>
 </view>
 
 <view wx:if="{{showLogin}}" class="index_login_div">
