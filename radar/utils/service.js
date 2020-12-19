@@ -17,6 +17,7 @@ export class Service extends Common {
         this.configData = configData;
     }
     send(endPoint, params) {
+        var self = this;
         var endPointData = this.getEndPoint(endPoint);
         if (endPointData) {
             return new Promise(function (resolve, reject) {
@@ -35,12 +36,22 @@ export class Service extends Common {
                         if(res.statusCode === 200) {
                             const data = res.data || {};
                             const app = getApp();
-                            if(data.success === false && data.notLogin) {
+                            if(data.statusCode === "NotLogin") {
                                 wx.removeStorageSync("token");
                                 app.globalData.token = null;
                                 app.globalData.userInfo = null;
+                                wx.redirectTo({
+                                  url: '/pages/login/index',
+                                });
+                                reject(data);
+                            } else {
+                                const token = wx.getStorageSync("token");
+                                const newToken = self.getValue(data, "data.token");
+                                if(self.isEmpty(token)) {
+                                    wx.setStorageSync('token', newToken);
+                                }
+                                resolve(res.data);
                             }
-                            resolve(res.data);
                         } else {
                             reject({
                                 status: res.statusCode,

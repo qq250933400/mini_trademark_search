@@ -1,0 +1,21 @@
+<view class="Login">
+    <view class="LoginHeader">
+        <image src="/res/basicprofile.jpeg" mode="widthFix" />
+    </view>
+    <view style="width:90vw;margin: 0 auto;">
+        <view class="LoginInput" style="margin-top: 40pt;">
+            <view>
+                <text>手机号码</text>
+                <input type="number" bindinput="onMobileInput"/>
+            </view>
+        </view>
+        <view class="LoginInput LoginVerifyCode">
+            <view>
+                <text>验证码</text>
+                <input type="number" bindinput="onVerifyCodeInput" />
+                <button bindtap="onSendSMS" disabled="{{sendEnabled}}">{{sendButtonText}}</button>
+            </view>
+        </view>
+        <button bindtap="onLogin" class="LoginButton">登录</button>
+    </view>
+</view>

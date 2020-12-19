@@ -1,0 +1,68 @@
+page {
+    background: #fff;
+}
+.LoginHeader {
+    display: block;
+    margin: 0 auto;
+    width: 30vw;
+    margin-top: 10vh;
+}
+.LoginHeader>image {
+    display: block;
+    width: 100%;
+}
+.LoginInput {
+    display: block;
+    padding: 0 20pt;
+    margin-top: 14pt;
+}
+.LoginInput>view {
+    display: block;
+    height: 24pt;
+}
+.LoginInput>view>text {
+    width: 60pt;
+    display: inline-block;
+    vertical-align: text-bottom;
+    color: #999999;
+}
+.LoginInput>view>input {
+    display: inline-block;
+    width: calc(100% - 62pt);
+    vertical-align: text-bottom;
+    border-bottom: 1px solid rgb(216, 216, 216);
+}
+.LoginVerifyCode>view>input {
+    width: calc(100% - 145pt);
+}
+.LoginVerifyCode>view>button {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding: 5pt 8pt;
+    font-size: 10pt;
+    width: 80pt;
+    font-weight: normal;
+    color: #333;
+    margin-left: 4pt;
+    background: #0edd8e;
+    color: #fff;
+}
+.LoginVerifyCode>view>button:active {
+    background: #0bbe7a;
+}
+.LoginVerifyCode>view>button:disabled {
+    background: #929292 !important;
+}
+.LoginButton {
+    display: block;
+    margin-top: 80pt;
+    width: 55vw;
+    background: #0fa0da;
+    color: #fff;
+}
+.LoginButton:hover {
+    background: #22b7f1;
+}
+.LoginButton:active {
+    background: #0d98cf;
+}

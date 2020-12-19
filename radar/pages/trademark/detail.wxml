@@ -1,0 +1,43 @@
+<scroll-view style="height: 100%;" scroll-x="hidden" scroll-y="auto">
+    <view class="nanjin_tianyi_mobile">
+        <view class="trademarkInfo">
+            <view class="trademarkImage">
+                <image mode="heightFix" src="{{data.data.ImageUrl}}"/>
+            </view>
+            <view><label>商标名称</label><text>{{data.data.Name}}</text></view>
+            <view><label>商标类型</label><text>{{data.data.IntCls}}.{{data.data.IntClsText}}</text></view>
+            <view><label>注册号</label><text>{{data.data.RegNo}}</text></view>
+            <view><label>申请时间</label><text>{{data.data.AppDate}}</text></view>
+            <view><label>状态</label><text>{{data.data.Status || ""}}</text></view>
+            <view><label>使用期限</label><text>{{data.data.ValidPeriod}}</text></view>
+            <view><label>申请人</label><text>{{data.data.ApplicantCn}}</text></view>
+            <view><label>申请地址</label><text>{{data.data.AddressCn}}</text></view>
+        </view>
+        <view class="trademarkFlow">
+            <label>申请流程</label>
+            <view>
+                <block wx:for="{{data.flowItems}}" wx:for-item="flow" wx:key="flowkey">
+                    <view>
+                        <label></label>
+                        <text>{{flow.FlowDate}}</text>
+                        <label>{{flow.FlowItem}}</label>
+                    </view>
+                </block>
+            </view>
+        </view>
+        <view class="trademarkGroupItems">
+            <label>商品服务列表</label>
+            <view>
+                <block wx:for="{{data.data.ListGroupItems}}" wx:for-item="group" wx:key="groupKey">
+                    <view>{{group}}</view>
+                </block>
+            </view>
+        </view>
+        <view class="trademarkInfo" style="padding-top: 5pt;">
+            <view><label>初审公告期号</label><text>{{data.data.AnnouncementIssue || ""}}</text></view>
+            <view><label>初审公告日期</label><text>{{data.data.AnnouncementDate || ""}}</text></view>
+            <view><label>注册公告期号</label><text>{{data.data.RegIssue || ""}}</text></view>
+            <view><label>注册公告日期</label><text>{{data.data.RegDate || ""}}</text></view>
+        </view>
+    </view>
+</scroll-view>

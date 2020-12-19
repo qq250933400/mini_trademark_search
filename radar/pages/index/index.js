@@ -1,257 +1,152 @@
-//index.js
-//获取应用实例
-import typesJson, { trademarkStatus } from "../../config/types.js";
-import { StaticCommon } from "../../utils/StaticCommon.js";
-import { Common } from "../../utils/common.js";
-const app = getApp()
-
+// pages/index/index.js
+const searchTypeData = [
+    {
+        title: "商标",
+        value: "trademark"
+    }, {
+        title: "专利",
+        value: "patent"
+    }, {
+        title: "著作权",
+        value: "copyright"
+    }, {
+        title: "软著",
+        value: "softcopyright"
+    }
+];
 Page({
+
+    /**
+     * 页面的初始数据
+     */
     data: {
-        motto: 'Hello World',
-        userInfo: {},
-        hasUserInfo: false,
-        canIUse: wx.canIUse('button.open-type.getUserInfo'),
-        i18n: {},
-        listData: [],
-        searchLikeMode: -1,
-        searchValue: "",
-        selectType: {},
-        typesData: typesJson,
+        categoryData: searchTypeData,
         showTypes: false,
-        showLogin: false,
-        page: 1,
-        pageSize: 20,
-        pageCount: 0,
-        needSetFocus: false
+        selectedTypes: [],
+        searchType: searchTypeData[0],
+        searchIntCls: "",
+        trademarkType: null,
+        trademarkResult: {}
     },
-    handleOnShowTypeTap: function() {
+
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    onLoad: function (options) {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady: function () {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面显示
+     */
+    onShow: function () {
+        this.ajaxLoadData();
+    },
+
+    /**
+     * 生命周期函数--监听页面隐藏
+     */
+    onHide: function () {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面卸载
+     */
+    onUnload: function () {
+
+    },
+
+    /**
+     * 页面相关事件处理函数--监听用户下拉动作
+     */
+    onPullDownRefresh: function () {
+
+    },
+
+    /**
+     * 页面上拉触底事件的处理函数
+     */
+    onReachBottom: function () {
+
+    },
+
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+
+    },
+    onCategoryChange: function(evt) {
+        this.setData({
+            searchType: evt.detail.data,
+            searchIntCls: ""
+        });
+        this.ajaxLoadData();
+    },
+    onTypeChange: function(evt) {
+        this.setData({
+            trademarkType: evt.detail.data,
+            searchIntCls: "",
+        });
+        this.ajaxLoadData();
+    },
+    /**
+     * 商品分类选择事件
+     * @param {any} evt 
+     */
+    onTTypeChange(evt) {
+        const data = evt.detail;
+        this.setData({
+            searchIntCls: data.code
+        });
+        this.ajaxLoadData();
+    },
+    ajaxLoadData: function() {
+        const app = getApp();
+        wx.showLoading({
+          title: '加载数据',
+        });
+        this.setData({
+            trademarkResult: {}
+        });
+        app.ajax("trademark.search", {
+            trademarkType: this.data.trademarkType,
+            searchType: this.data.searchType,
+            company: wx.getStorageSync('company'),
+            intCls: this.data.searchIntCls
+        }).then((resp) => {
+            wx.hideLoading();
+            if(app.ajaxHandler(resp)) {
+                this.setData({
+                    trademarkResult: resp.data
+                });
+                console.log(resp.data);
+            }
+        }).catch((err) => {
+            wx.hideLoading();
+            app.ajaxHandler(err)
+        });
+    },
+    onFilterTap:function() {
         this.setData({
             showTypes: true
         });
     },
-    handleOnTypeCloseTap: function(){
-        this.setData({
-            showTypes: false
-        });
+    onCompanyChange(evt) {
+        this.ajaxLoadData();
     },
-    handleOnTypeTap: function(evt) {
-        const cType = evt.currentTarget.dataset;
-        if(this.data.selectType.code !== cType.code) {
-            this.setData({
-                selectType: evt.currentTarget.dataset,
-                showTypes: false,
-                page: 1,
-                listData: []
-            });
-            this.actionSearch();
-        } else {
-            this.setData({
-                selectType: {},
-                page: 1,
-                showTypes: false,
-                listData: []
-            });
-            this.actionSearch();
-        }
-    },
-    bindSearchSameModeTap: function() {
-        if(this.data.searchLikeMode !== 0) {
-            this.setData({
-                searchLikeMode: 0,
-                listData: [],
-                page: 1
-            });
-            this.actionSearch();
-        } else {
-            this.setData({
-                searchLikeMode: -1,
-                listData: [],
-                page: 1
-            });
-            this.actionSearch();
-        }
-    },
-    bindSearchLikeModeTap: function () {
-        if(this.data.searchLikeMode !== 1) {
-            this.setData({
-                searchLikeMode: 1,
-                listData: [],
-                page: 1
-            });
-            this.actionSearch();
-        } else {
-            this.setData({
-                searchLikeMode: -1,
-                listData: [],
-                page: 1
-            });
-            this.actionSearch();
-        }
-    },
-    bindOnButtonSearchTap: function(){
-        this.setData({
-            page: 1,
-            listData: []
-        });
-        this.actionSearch();
-    },
-    handleOnSearchValueInput: function(evt){
-        this.setData({
-            searchValue: evt.detail.value || "",
-            page: 1
-        });
-        if(evt.detail.keyCode === 13) {
-            this.setData({
-                listData: []
-            });
-            this.actionSearch();
-        }
-    },
-    handleOnMoreTap: function() {
-        console.log(this.data.page, this.data.pageCount);
-        if(this.data.page + 1 <= this.data.pageCount+1) {
-            this.setData({
-                page: this.data.page + 1
-            });
-            this.actionSearch();
-        }
-    },
-    handleOnListItemTap: function(evt) {
-        const id = evt.currentTarget.dataset.id;
-        wx.setStorageSync("searchNamePageData", JSON.stringify(this.data));
+    onTrademarkTab(evt) {
+        console.log(evt);
         wx.navigateTo({
-            url: '/pages/detail/detail?id=' + id,
-        });
-    },
-    onLoad: function(options) {
-        var keyword = options.keyword || "";
-        keyword = decodeURIComponent(keyword);
-        this.setData({
-            i18n: app.getI18n("index"),
-            searchValue: keyword,
-            from: options.from,
-            needSetFocus: options.from === "home" || (options.from === "detail" && !StaticCommon.isEmpty(keyword))
-        });
-    },
-    onUnload: function(){
-        this.setData({
-            needSetFocus: false
-        });
-    },
-    onHide: function() {
-        this.setData({
-            needSetFocus: false
-        });
-    },
-    onShow: function() {
-        const com = new Common();
-        const isLogin = com.checkLogin();
-        if(this.data.from === "detail" && !StaticCommon.isEmpty(this.data.searchValue)) {
-            this.actionSearch();
-            wx.setStorageSync('searchNamePageData', null);
-            console.log("search-value");
-            console.log(this.data.searchValue, this.data.from);
-        } else {
-            let hisListData = wx.getStorageSync("searchNamePageData");
-            let isLoadData = true;
-            let checkData = {};
-            if(!com.isEmpty(hisListData)) {
-                const hisData = JSON.parse(hisListData);
-                this.setData(hisData);
-                checkData = hisData;
-                if(hisData.searchValue !== this.data.searchValue) {
-                    isLoadData = true;
-                } else {
-                    isLoadData = false;
-                }
-            } else {
-                checkData = this.data;
-            }
-            if (!StaticCommon.isEmpty(checkData.searchValue)) {
-                isLoadData && this.setData({
-                    page: 1,
-                    listData: []
-                });
-                isLogin && isLoadData && this.actionSearch();
-            }
-        }
-        if(!isLogin) {
-            this.setData({
-                showLogin: true
-            });
-        }
-    },
-    actionSearch: function() {
-        const params = {
-            searchValue: this.data.searchValue,
-            likeMode: this.data.searchLikeMode,
-            type: this.data.selectType,
-            page: this.data.page,
-            pageSize: this.data.pageSize
-        };
-        if (StaticCommon.isEmpty(params.searchValue)) {
-            this.setData({
-                listData: [],
-                page: 1
-            });
-            wx.showModal({
-                content: '请输入搜索内容',
-                showCancel: false,
-                confirmText: "关闭"
-            });
-        } else {
-            wx.showLoading({
-                title: '正在查询',
-            });
-            app.ajax("trademark.search", params).then((resp) => {
-                if(resp.success && resp.total>0) {
-                    const listData = resp.data || [];
-                    let oData = this.data.listData || [];
-                    oData = JSON.parse(JSON.stringify(oData));
-                    listData.map((item) => {
-                        item.tmStatusText = trademarkStatus[item.TmStatus];
-                        oData.push(item);
-                    });
-                    this.setData({
-                        listData: oData,
-                        pageCount: Math.ceil(resp.total / this.data.pageSize)
-                    });
-                } else {
-                    const updateState = {};
-                    if(resp.notLogin) {
-                        updateState.showLogin = true;
-                        this.setData(updateState);
-                    } else {
-                        if (this.data.searchLikeMode === 0 && this.data.page === 1) {
-                            wx.showModal({
-                                content: '没有该相同商标，请点击近似商标查看',
-                                showCancel: false,
-                                confirmText: "关闭"
-                            });
-                        } else {
-                            wx.showModal({
-                                title: '没有查询到商标信息，请点击近似商标查看',
-                                showCancel: false,
-                                confirmText: "关闭"
-                            });
-                        }
-                    }
-                }
-                wx.hideLoading();
-            }).catch((error) => {
-                wx.hideLoading();
-                wx.showToast({
-                    title: error.message || error.statusText || error.info || "搜索失败",
-                });
-            });
-        }
-    },
-    handleOnStartLoginTap:function(){
-        const com = new Common();
-        com.startLogin((token) => {
-            this.setData({
-                showLogin: com.isEmpty(token)
-            });
+          url: '/pages/trademark/detail?id=' + evt.currentTarget.dataset.value.Id,
         });
     }
 })

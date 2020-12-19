@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "CompanyInfo": "/widget/companyInfo/index",
+    "Categories": "/widget/categories/index",
+    "Types": "/widget/types/index"
+  }
 }

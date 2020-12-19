@@ -1,19 +1,40 @@
 {
     "pages": [
-        "pages/home/home",
-        "pages/types/types",
-        "pages/typesDetail/typesDetail",
-        "pages/imgList/index",
-        "pages/image/index",
-        "pages/detail/detail",
-        "pages/index/index",
-        "pages/logs/logs"
+        
+        "pages/index/index","pages/trademark/detail",
+        "pages/task/task",
+        "pages/watch/watch",
+        "pages/login/index",
+        "widget/categories/index"
     ],
     "window": {
         "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
+        "navigationBarBackgroundColor": "#e9e9e9",
         "navigationBarTitleText": "商标查询",
         "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "selectedColor": "#f4e200",
+        "list": [
+            {
+                "iconPath": "/res/icon/home.png",
+                "selectedIconPath": "/res/icon/home_checked.png",
+                "pagePath": "pages/index/index",
+                "text": "知产库"
+            },
+            {
+                "iconPath": "/res/icon/watch.png",
+                "selectedIconPath": "/res/icon/watch_checked.png",
+                "pagePath": "pages/watch/watch",
+                "text": "商标监控"
+            },
+            {
+                "iconPath": "/res/icon/task.png",
+                "selectedIconPath": "/res/icon/task_checked.png",
+                "pagePath": "pages/task/task",
+                "text": "业务进度"
+            }
+        ]
     },
     "style": "v2",
     "sitemapLocation": "sitemap.json"

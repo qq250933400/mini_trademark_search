@@ -1,0 +1,20 @@
+<!--商标分类选择页面-->
+<view class="home-types-list animationShowMask" wx:if="{{showTypes}}">
+    <view class="animationShowType">
+        <view>
+            <label>
+                <text>{{i18n.trademarkType}}</text>
+                <button bindtap="onClose">×</button>
+            </label>
+            <view class="home-types-context">
+                <block wx:for="{{typesData}}" wx:key="key" wx:for-item="type">
+                    <view bindtap="handleOnTypeTap" data-code="{{type.code}}" data-title="{{type.title}}" class="{{type.checked ? 'active' : ''}}">
+                        <label>
+                            <text>{{type.code}} {{type.title}}</text>
+                        </label>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>
+</view>

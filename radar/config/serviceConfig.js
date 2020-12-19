@@ -6,38 +6,26 @@ module.exports = (app) => {
         trademark: {
             devUrl: "http://localhost/api/public/index.php",
             prodUrl: "https://bj.uzhutm.com/public/index.php",
-            isDev: false,
+            isDev: true,
             endPoints: {
                 login: {
-                    url: "/mini/trademark/login/index",
+                    url: "/min/trademark/radar/login",
                     type: "POST"
                 },
                 search: {
-                    url: "/mini/trademark/search/index",
+                    url: "/min/trademark/radar/yapi/search",
                     type: "POST"
                 },
-                detail: {
-                    url:"/mini/trademark/search/detail",
+                sendSMS: {
+                    url: "/min/trademark/radar/sms",
                     type: "POST"
                 },
-                uploadImage: {
-                    url: "/mini/trademark/search/upload",
+                getCompanys: {
+                    url: "/min/trademark/radar/getCompany",
                     type: "POST"
                 },
-                searchImage: {
-                    url: "/min/trademark/search/image",
-                    type: "POST"
-                },
-                register: {
-                    url: "/min/trademark/index/register",
-                    type: "POST"
-                },
-                searchType: {
-                    url: "/mini/trademark/search/types",
-                    type: "POST"
-                },
-                searchSubTypes: {
-                    url: "/min/trademark/search/subTypes",
+                trademarkDetail: {
+                    url: "/min/trademark/radar/detail/trademark",
                     type: "POST"
                 }
             }
