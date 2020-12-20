@@ -1,8 +1,8 @@
 {
     "pages": [
+        "pages/index/index",
         "pages/task/task",
         "pages/watch/watch",
-        "pages/index/index",
         "pages/trademark/detail",
         "pages/login/index",
         "widget/categories/index",
