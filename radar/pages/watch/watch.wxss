@@ -1,1 +1,39 @@
-/* pages/watch/watch.wxss */
+@import "../../res/styles/tianyi.wxss";
+
+.tianyi-mobile-content {
+    height: 100%;
+}
+.trademarkContainer {
+    height: calc(100% - 55pt);
+    position: relative;
+}
+.trademarklistArea {
+    height: calc(100% - 24pt);
+    position: relative;
+}
+.trademarklistArea>scroll-view {
+    height: 100%;
+}
+.tianyi_list_all_info>view>label,
+.tianyi_list_all_info>view>h5 {
+    font-size: 10pt;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.tianyi_list_all_info>view>view>label {
+    display: block;
+    height: 27pt;
+    line-height: 48pt;
+    text-align: center;
+}
+.tianyi_list_all_info>view>view>text{
+    display: block;
+    line-height: 26pt;
+    text-align: center;
+    color: #333;
+}
+.tianyi_list_all_info {
+    height: 56pt !important;
+}

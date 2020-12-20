@@ -1,2 +1,30 @@
-<!--pages/watch/watch.wxml-->
-<text>pages/watch/watch.wxml</text>
+<CompanyInfo bindchange="onCompanyChange" />
+<Categories data="{{categoryData}}" defaultValue="{{selectedCategory}}" />
+<view class="trademarkList trademarkContainer">
+    <view class="tianyi-mobile-content" wx:if="{{hasData}}">
+        <view class="tianyi_list_all trademarklistArea" style="height: auto;">
+            <view class="trademark_task_list">
+                <block wx:for="{{apiResponse.listData}}" wx:for-item="item" wx:key="apiFor">
+                    <view bindtap="onClick" data-regno="{{item.regNo}}" data-id="{{item.id}}">
+                        <view>
+                            <view class="tianyi_list_all_info" >
+                                <image src="{{item.image}}" />
+                                <view>
+                                    <h5><i>商标名称：</i><span>{{item.trademarkName}}</span></h5>
+                                    <label><i>注册号：</i><span>{{item.regNo}}</span></label>
+                                    <label><i>申请日期：</i><span>{{item.applicationDate}}</span></label>
+                                    <label><i>监控类型：</i><span>{{item.regType}}</span></label>
+                                    <view>
+                                        <label>{{item.intClsData.data}}</label>
+                                        <text>{{item.intCls}}</text>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>
+    <label wx:if="{{!hasData}}" class="tianyi-errorMessage">查询无结果</label>
+</view>

@@ -5,8 +5,8 @@ module.exports = (app) => {
     return setServiceConfig(app, {
         trademark: {
             devUrl: "http://localhost/api/public/index.php",
-            prodUrl: "https://bj.uzhutm.com/public/index.php",
-            isDev: true,
+            prodUrl: "https://www.uzhutm.com/public/index.php",
+            isDev: false,
             endPoints: {
                 login: {
                     url: "/min/trademark/radar/login",
@@ -26,6 +26,22 @@ module.exports = (app) => {
                 },
                 trademarkDetail: {
                     url: "/min/trademark/radar/detail/trademark",
+                    type: "POST"
+                },
+                watchList: {
+                    url: "/min/trademark/radar/watch/list",
+                    type: "POST"
+                },
+                watchDetail: {
+                    url: "/min/trademark/radar/watch/detail",
+                    type: "POST"
+                },
+                latestTask: {
+                    url: "/min/trademark/radar/task/latestList",
+                    type: "POST"
+                },
+                allTask: {
+                    url: "/min/trademark/radar/task/allList",
                     type: "POST"
                 }
             }

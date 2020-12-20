@@ -17,7 +17,7 @@ App({
         obj.setConfig(this.globalData.serviceConfig);
         return obj.send(endPoint, params);
     },
-    ajaxHandler(data, isError = false) {
+    ajaxHandler(data, isError = false, callback = null) {
         wx.hideLoading();
         if(data && /^200$/.test(data.statusCode)) {
             return true;
@@ -26,7 +26,10 @@ App({
             wx.showModal({
                 content: msg,
                 showCancel: false,
-                confirmText: "关闭"
+                confirmText: "关闭",
+                success: () => {
+                    typeof callback === "function" && callback();
+                }
             });
             return false;
         }

@@ -35,13 +35,21 @@ Component({
             this.triggerEvent("change", {
                 data: itemData
             });
+        },
+        onMaskTap() {
+            this.setData({
+                visible: false
+            });
         }
     },
     lifetimes: {
         ready() {
             const app = getApp();
             const listData = app.globalData.companyInfo || [];
-            const newData = [];
+            const newData = [{
+                id: -1,
+                name: "全部公司"
+            }];
             listData.map((com) => {
                 newData.push({
                     name: com.companyName,

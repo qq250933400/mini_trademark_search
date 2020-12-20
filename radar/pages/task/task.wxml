@@ -1,2 +1,47 @@
-<!--pages/task/task.wxml-->
-<text>pages/task/task.wxml</text>
+<CompanyInfo bindchange="onCompanyChange" />
+<view class="tianyi_task_tab">
+    <view bindtap="onTabChange" data-all="{{false}}" class="{{!isAll ? 'active' : ''}}"><label>最新进度</label></view>
+    <view bindtap="onTabChange" data-all="{{true}}" class="{{isAll ? 'active' : ''}}"><label>所有业务</label></view>
+</view>
+<view class="tianyi_list_last_prog taskListArea">
+    <view style="padding-bottom:30px;display: block;">
+        <view class="trademark_task_list">
+            <block wx:for="{{apiResponse.data}}" wx:for-item="item" wx:key="taskList">
+                <view >
+                    <view>
+                        <view class="tianyi_list_last_prog_info">
+                            <image src="{{item.image}}"/>
+                            <view>
+                                <view class="prog_h5"><label class="prog_h5_span">商标名称：</label><text class="prog_h5_text">{{item.name}}</text></view>
+                                <view class="prog_label"><label class="prog_label_name">注册号：</label><text class="prog_label_text">{{item.trademark_task_no}}</text></view>
+                                <view class="prog_label"><label class="prog_label_name">注册分类：</label>
+                                    <block wx:for="{{item.categories}}" wx:for-item="cat" wx:key="catKey">
+                                        <text class="prog_label_text">[{{cat.option_value_name}}]{{cat.option_value_data}}</text>
+                                    </block>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="tianyi_list_last_prog_status" data-id="4704">
+                            <label class="prog_status_title">商标续展证明</label>
+                            <view class="prog_file_list">
+                                <block wx:for="{{item.statusFiles}}" wx:for-item="file" wx:key="sfile">
+                                    <view class="otherTypeFile">
+                                        <view class="prog_link" data-file="{{file}}" bindtap="onLinkTap">
+                                            <text class="prog_link_name">点击下载：</text>
+                                            <text class="prog_link_title">{{file.name}}</text>
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                            <view class="tianyi_list_prog_action">
+                                <button >点击查看</button>
+                                <button class="sendEmail">发到邮箱</button>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+        </view>
+        <view class="ajaxMore">点击加载更多</view>
+    </view>
+</view>

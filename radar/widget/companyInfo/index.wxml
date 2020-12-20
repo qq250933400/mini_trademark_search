@@ -3,7 +3,7 @@
     <label wx:if="{{companyList.length <= 1}}">【公司信息】</label>
     <text bindtap="onSwtichCom">{{choseCompany.name}}</text>
 </view>
-<view wx:if="{{visible}}" class="CompanyList animationShowMask">
+<view wx:if="{{visible}}" class="CompanyList animationShowMask" bindtap="onMaskTap">
     <view class="animationShowType">
         <scroll-view scroll-x="hidden" scroll-y="auto">
             <block wx:for="{{companyList}}" wx:for-item="com" wx:key="comKey">

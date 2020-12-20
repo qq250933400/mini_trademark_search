@@ -5,7 +5,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        id: ""
+        id: "",
+        regno: ""
     },
 
     /**
@@ -13,7 +14,8 @@ Page({
      */
     onLoad: function (options) {
         this.setData({
-            id: options.id
+            id: options.id,
+            regno: options.regno
         });
     },
 
@@ -30,16 +32,25 @@ Page({
     onShow: function () {
         const app = getApp();
         wx.showLoading({title: "加载数据"});
-        app.ajax("trademark.trademarkDetail", {
-            id: this.data.id
+        app.ajax("trademark.watchDetail", {
+            id: this.data.id,
+            regno: this.data.regno
         }).then((resp) => {
-            if(app.ajaxHandler(resp)) {
+            if(app.ajaxHandler(resp, false, () => {
+                wx.switchTab({
+                    url: '/pages/watch/watch',
+                });
+            })) {
                 this.setData({
                     data: resp.data
                 });
             }
         }).catch((err) => {
-            app.ajaxHandler(err);
+            app.ajaxHandler(err, true, () => {
+                wx.switchTab({
+                  url: '/pages/watch/watch',
+                });
+            });
         });
     },
 

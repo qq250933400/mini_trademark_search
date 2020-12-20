@@ -1,1 +1,15 @@
 /* pages/task/task.wxss */
+.taskListArea {
+    height:calc(100% - 70pt);
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 4pt;
+}
+.taskListArea>view>view>view {
+    margin-top: 10pt;
+    background: #fff;
+    border-radius: 6pt;
+}
+.taskListArea>view>view>view:first-child {
+    margin-top: 0;
+}

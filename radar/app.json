@@ -1,11 +1,13 @@
 {
     "pages": [
-        
-        "pages/index/index","pages/trademark/detail",
         "pages/task/task",
         "pages/watch/watch",
+        "pages/index/index",
+        "pages/trademark/detail",
         "pages/login/index",
-        "widget/categories/index"
+        "widget/categories/index",
+        "pages/watchDetail/index",
+        "pages/web/index"
     ],
     "window": {
         "backgroundTextStyle": "light",

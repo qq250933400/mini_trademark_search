@@ -18,7 +18,8 @@ Component({
      */
     data: {
         listData: [],
-        choseItem: null
+        choseItem: null,
+        visible: false
     },
 
     /**
@@ -27,13 +28,43 @@ Component({
     methods: {
         onItemTab: function(evt) {
             const currentItem = evt.currentTarget.dataset;
+            const children = currentItem.children || [];
+            evt.cancelBubble = true;
+            console.log(children);
+            if(children.length <= 0) {
+                this.setData({
+                    choseItem: currentItem,
+                    choseTabItem: null,
+                    choseTab: null
+                });
+                this.triggerEvent("change", {
+                    data: currentItem
+                }, {
+                    bubbles: false
+                });
+            } else {
+                this.setData({
+                    visible: true,
+                    menuData: children,
+                    choseTab: currentItem
+                });
+            }
+        },
+        onClick(evt) {
+            const itemData = evt.currentTarget.dataset;
+            evt.cancelBubble = true;
             this.setData({
-                choseItem: currentItem
+                choseItem: this.data.choseTab,
+                choseTabItem: itemData,
+                visible: false
             });
             this.triggerEvent("change", {
-                data: currentItem
-            }, {
-                bubbles: false
+                data: itemData
+            });
+        },
+        onMaskTap() {
+            this.setData({
+                visible: false
             });
         }
     },
@@ -51,6 +82,11 @@ Component({
             });
             this.setData({
                 choseItem: value
+            });
+        },
+        data(value) {
+            this.setData({
+                listData: value
             });
         }
     }

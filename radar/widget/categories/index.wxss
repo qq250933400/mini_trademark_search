@@ -1,1 +1,2 @@
 @import "../../res/styles/tianyi.wxss";
+@import "../../widget/companyInfo/index.wxss";

@@ -1,11 +1,12 @@
-// pages/trademark/detail.js
+import { StaticCommon } from "../../utils/StaticCommon";
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        id: ""
+
     },
 
     /**
@@ -13,7 +14,7 @@ Page({
      */
     onLoad: function (options) {
         this.setData({
-            id: options.id
+            url: !StaticCommon.isEmpty(options.url) ? decodeURIComponent(options.url) : ''
         });
     },
 
@@ -28,19 +29,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        const app = getApp();
-        wx.showLoading({title: "加载数据"});
-        app.ajax("trademark.trademarkDetail", {
-            id: this.data.id
-        }).then((resp) => {
-            if(app.ajaxHandler(resp)) {
-                this.setData({
-                    data: resp.data
-                });
-            }
-        }).catch((err) => {
-            app.ajaxHandler(err);
-        });
+
     },
 
     /**
