@@ -21,7 +21,8 @@ Component({
     data: {
         typesData: typesJson,
         showTypes: false,
-        choseData: []
+        choseData: [],
+        trademarkType: []
     },
 
     /**
@@ -39,13 +40,14 @@ Component({
             const itemData = evt.currentTarget.dataset;
             const itemIndex = choseData.indexOf(itemData.code);
             const typeData = JSON.parse(JSON.stringify(typesJson));
+            const trademarkType = wx.getStorageSync('trademarkType') || [];
             if(itemIndex>=0) {
                 choseData.splice(itemIndex, 1);
             } else {
                 choseData.push(itemData.code);
             }
             for(const type of typeData) {
-                type.checked = type.code === itemData.code;// choseData.indexOf(type.code) >= 0;
+                type.checked = type.code === itemData.code || trademarkType.indexOf(type.code)>=0;
             }
             this.setData({
                 choseData: [itemData.code],
@@ -59,8 +61,15 @@ Component({
     },
     lifetimes: {
         ready(){
+            const trademarkType = wx.getStorageSync('trademarkType') || [];
+            const typeData = JSON.parse(JSON.stringify(typesJson));
+            for(const type of typeData) {
+                type.checked = trademarkType.indexOf(type.code) >= 0;
+            }
             this.setData({
-                showTypes: this.properties.visible
+                showTypes: this.properties.visible,
+                typesData: typeData,
+                trademarkType
             });
         }
     },

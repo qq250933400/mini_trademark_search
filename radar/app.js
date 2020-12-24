@@ -3,6 +3,7 @@ import setServiceConfig from "./config/serviceConfig.js";
 import i18nConfigData from "./config/i18n.js";
 import { Service } from "./utils/service.js";
 import { I18n } from "./utils/i18n.js";
+import { StaticCommon } from "./utils/StaticCommon.js";
 
 App({
     onLaunch: function() {
@@ -22,16 +23,20 @@ App({
         if(data && /^200$/.test(data.statusCode)) {
             return true;
         } else {
-            const msg = data.info || data.message || "未知错误";
-            wx.showModal({
-                content: msg,
-                showCancel: false,
-                confirmText: "关闭",
-                success: () => {
-                    typeof callback === "function" && callback();
-                }
-            });
-            return false;
+            if(!/None/.test(data.statusCode)) {
+                const msg = data.info || data.message || "未知错误";
+                wx.showModal({
+                    content: msg,
+                    showCancel: false,
+                    confirmText: "关闭",
+                    success: () => {
+                        typeof callback === "function" && callback();
+                    }
+                });
+                return false;
+            } else {
+                return false;
+            }
         }
     },
     getI18n: function(nodeKey, defaultValue) {
@@ -44,12 +49,46 @@ App({
             }).then((resp) => {
                 if(this.ajaxHandler(resp)){
                     this.globalData.companyInfo = resp.data || [];
+                    typeof this.onCompanyLoaded === "function" && this.onCompanyLoaded(resp.data || []);
                     typeof fn === "function" && fn();
                 }
             }).catch((err) => {
                 this.ajaxHandler(err, true);
             });
         }
+    },
+    onCompanyLoaded(){
+        console.log("Not Ready");
+    },
+    onDepartmentChange() {
+        console.log("Not Ready");
+    },
+    checkLogin() {
+        const token = wx.getStorageSync('token');
+        return !StaticCommon.isEmpty(token);
+    },
+    checkInitDepartment() {
+        const defaultDepartment = wx.getStorageSync('departments');
+        if(!defaultDepartment || defaultDepartment.length<=0) {
+            const company = wx.getStorageSync('company');
+            this.loadDepartments(company);
+        }
+    },
+    loadDepartments(comany) {
+        const app = getApp();
+        app.ajax("trademark.departments", {
+            companyId: comany.id
+        }).then((resp) => {
+            const listData = resp.data || [];
+            if(app.ajaxHandler(resp)) {
+                wx.setStorageSync('departments', resp.data);
+            } else {
+                wx.setStorageSync('departments', []);
+            }
+            typeof app.onDepartmentChange === "function" && app.onDepartmentChange(listData);
+        }).catch((err) => {
+            console.log(err);
+        });
     },
     globalData: {
         userInfo: null,

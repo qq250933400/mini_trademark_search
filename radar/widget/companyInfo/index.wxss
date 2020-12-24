@@ -35,10 +35,15 @@
     border-radius: 5pt;
     box-sizing: border-box;
 }
-.CompanyList>view>scroll-view {
+.CompanyList>view>view {
+    display: block;
     height: 100%;
+    position: relative;
 }
-.CompanyList>view>scroll-view label {
+.CompanyList>view>view>scroll-view {
+    max-height: calc(70vh - 10pt);
+}
+.CompanyList>view>view>scroll-view label {
     display: block;
     min-height: 26pt;
     line-height: 26pt;

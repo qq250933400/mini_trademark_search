@@ -1,15 +1,19 @@
-/* pages/task/task.wxss */
+@import "../../res/styles/tianyi.wxss";
 .taskListArea {
     height:calc(100% - 70pt);
+    margin-top: 4pt;
+    position: relative;
+}
+.taskListArea>scroll-view {
+    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-top: 4pt;
 }
-.taskListArea>view>view>view {
+.taskListAreaContent>view>view>view {
     margin-top: 10pt;
     background: #fff;
     border-radius: 6pt;
 }
-.taskListArea>view>view>view:first-child {
+.taskListAreaContent>view>view>view:first-child {
     margin-top: 0;
 }

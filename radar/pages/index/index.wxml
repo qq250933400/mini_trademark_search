@@ -1,13 +1,12 @@
-<CompanyInfo bindchange="onCompanyChange"/>
-<Categories bindchange="onCategoryChange" data="{{categoryData}}" defaultValue="{{categoryData[0]}}"/>
+<CompanyInfo bindchange="onCompanyChange" hasAll="{{false}}"/>
+<Categories bindchange="onCategoryChange" binditemtap="onCategoryItemTap" data="{{categoryData}}" defaultValue="{{categoryData[0]}}"/>
 <view class="trademarkList trademarkContainer">
     <view class="tianyi-mobile-content">
         <label class="tianyi-search-count">
             <text>共有{{trademarkResult.total || 0}}个结果</text>
-            <view class="search-filter" bindtap="onFilterTap">筛选>></view>
         </label>
-        <view wx:if="{{trademarkResult.total > 0 && searchType.value==='trademark'}}" class="tianyi-trademarklist trademarklistArea">
-            <scroll-view scroll-y="auto" scroll-x="hidden">
+        <view wx:if="{{trademarkResult.total > 0}}" class="tianyi-trademarklist trademarklistArea">
+            <scroll-view scroll-y="auto" scroll-x="hidden" bindscrolltolower="onListScrollBottom">
                 <block wx:for="{{trademarkResult.listData}}" wx:for-item="trademark" wx:key="trademarkKey">
                     <view class="tianyi-trademarklist-item" bindtap="onTrademarkTab" data-value="{{trademark}}">
                         <view>

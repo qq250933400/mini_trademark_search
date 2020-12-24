@@ -3,45 +3,88 @@
     <view bindtap="onTabChange" data-all="{{false}}" class="{{!isAll ? 'active' : ''}}"><label>最新进度</label></view>
     <view bindtap="onTabChange" data-all="{{true}}" class="{{isAll ? 'active' : ''}}"><label>所有业务</label></view>
 </view>
-<view class="tianyi_list_last_prog taskListArea">
-    <view style="padding-bottom:30px;display: block;">
-        <view class="trademark_task_list">
-            <block wx:for="{{apiResponse.data}}" wx:for-item="item" wx:key="taskList">
-                <view >
-                    <view>
-                        <view class="tianyi_list_last_prog_info">
-                            <image src="{{item.image}}"/>
+<view class="taskListArea">
+    <scroll-view bindscrolltolower="onScrollToBottom" scroll-y="auto" scroll-x="hidden">
+        <view class="tianyi_list_last_prog taskListAreaContent">
+            <view style="padding-bottom:30px;display: block;">
+                <view class="trademark_task_list">
+                    <block wx:for="{{apiResponse.data}}" wx:for-item="item" wx:key="taskList">
+                        <view >
                             <view>
-                                <view class="prog_h5"><label class="prog_h5_span">商标名称：</label><text class="prog_h5_text">{{item.name}}</text></view>
-                                <view class="prog_label"><label class="prog_label_name">注册号：</label><text class="prog_label_text">{{item.trademark_task_no}}</text></view>
-                                <view class="prog_label"><label class="prog_label_name">注册分类：</label>
-                                    <block wx:for="{{item.categories}}" wx:for-item="cat" wx:key="catKey">
-                                        <text class="prog_label_text">[{{cat.option_value_name}}]{{cat.option_value_data}}</text>
-                                    </block>
+                                <view class="tianyi_list_last_prog_info">
+                                    <image src="{{item.image}}"/>
+                                    <view>
+                                        <view class="prog_h5"><label class="prog_h5_span">商标名称：</label><text class="prog_h5_text">{{item.name}}</text></view>
+                                        <view class="prog_label"><label class="prog_label_name">注册号：</label><text class="prog_label_text">{{item.trademark_task_no}}</text></view>
+                                        <view class="prog_label"><label class="prog_label_name">注册分类：</label>
+                                            <block wx:for="{{item.categories}}" wx:for-item="cat" wx:key="catKey">
+                                                <text class="prog_label_text">[{{cat.option_value_name}}]{{cat.option_value_data}}</text>
+                                            </block>
+                                        </view>
+                                    </view>
+                                </view>
+                                <view class="tianyi_list_last_prog_status" data-id="4704">
+                                    <label class="prog_status_title">商标续展证明</label>
+                                    <view class="prog_file_list">
+                                        <block wx:for="{{item.statusFiles}}" wx:for-item="file" wx:key="sfile">
+                                            <view class="otherTypeFile">
+                                                <view class="prog_link" data-file="{{file}}" bindtap="onLinkTap">
+                                                    <text class="prog_link_name">点击下载：</text>
+                                                    <text class="prog_link_title">{{file.name}}</text>
+                                                </view>
+                                            </view>
+                                        </block>
+                                    </view>
+                                    <view class="tianyi_list_prog_action">
+                                        <button bindtap="onViewFlow" data-item="{{item}}">点击查看</button>
+                                        <button bindtap="onToSendEmail" data-item="{{item}}" class="sendEmail">发到邮箱</button>
+                                    </view>
                                 </view>
                             </view>
                         </view>
-                        <view class="tianyi_list_last_prog_status" data-id="4704">
-                            <label class="prog_status_title">商标续展证明</label>
-                            <view class="prog_file_list">
-                                <block wx:for="{{item.statusFiles}}" wx:for-item="file" wx:key="sfile">
-                                    <view class="otherTypeFile">
-                                        <view class="prog_link" data-file="{{file}}" bindtap="onLinkTap">
-                                            <text class="prog_link_name">点击下载：</text>
-                                            <text class="prog_link_title">{{file.name}}</text>
-                                        </view>
-                                    </view>
-                                </block>
-                            </view>
-                            <view class="tianyi_list_prog_action">
-                                <button >点击查看</button>
-                                <button class="sendEmail">发到邮箱</button>
-                            </view>
-                        </view>
-                    </view>
+                    </block>
                 </view>
+                <view class="ajaxMore" wx:if="{{apiResponse.pageCount > searchPage}}">下来查看更多</view>
+                <label wx:if="{{!hasData}}" class="tianyi-errorMessage">查询无结果</label>
+            </view>
+        </view>
+    </scroll-view>
+</view>
+<view wx:if="{{showFlow}}" class="trademark_status_flow">
+    <view bindtap="onTaskProgMaskTap">
+        <view visible="1" catchtap="onTaskProgTap" class="animationFromShow">
+            <block wx:for="{{flowData}}" wx:for-item="flow" wx:key="myflow">
+                <label>
+                    <h5>{{flow.title}}</h5>
+                    <span>{{flow.description}}</span>
+                    <view wx:if="{{flow.fileList.length>0}}" class="trademark_status_flow_files">
+                        <block wx:for="{{flow.fileList}}" wx:for-item="file" wx:key="fileKey">
+                            <li class="trademark_status_flow_files_other">
+                                <label bindtap="onFlowFileTap" data-file="{{file}}">
+                                    <i wx:if="{{file.isImage}}">点击查看：</i>
+                                    <i wx:if="{{!file.isImage}}">点击下载：</i>
+                                    <span>{{file.title}}</span>
+                                </label>
+                            </li>
+                        </block>
+                    </view>
+                </label>
             </block>
         </view>
-        <view class="ajaxMore">点击加载更多</view>
+    </view>
+</view>
+
+<view wx:if="{{showEmail}}" class="tianyi-input-email" bindtap="onInputMailMaskTap">
+    <view>
+        <view class="tianyi-input-email-content animationFromShow" catchtap="onTaskProgTap">
+            <view>
+                <input bindinput="onEmailInput" type="text" placeholder="请输入邮箱地址" value="{{inputEmail}}"/>
+                <view>
+                    <button bindtap="onInputMailMaskTap" class="tianyi-input-email-cancel">取消</button>
+                    <button bindtap="onSendEmail" class="tianyi-input-email-send" >发到邮箱</button>
+                </view>
+                <text>注：如果收不到邮件，可能被会被邮箱拦截，请到邮箱的垃圾邮件查看。</text>
+            </view>
+        </view>
     </view>
 </view>

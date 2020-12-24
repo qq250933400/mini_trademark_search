@@ -4,7 +4,10 @@ Component({
      * 组件的属性列表
      */
     properties: {
-
+        hasAll: {
+            type: "boolean",
+            value: false
+        }
     },
 
     /**
@@ -35,21 +38,57 @@ Component({
             this.triggerEvent("change", {
                 data: itemData
             });
+            this.loadDepartments(itemData);
         },
         onMaskTap() {
             this.setData({
                 visible: false
             });
+        },
+        loadDepartments(comany) {
+            const app = getApp();
+            app.ajax("trademark.departments", {
+                companyId: comany.id
+            }).then((resp) => {
+                const listData = resp.data || [];
+                if(app.ajaxHandler(resp)) {
+                    wx.setStorageSync('departments', resp.data);
+                } else {
+                    wx.setStorageSync('departments', []);
+                }
+                typeof app.onDepartmentChange === "function" && app.onDepartmentChange(listData);
+            }).catch((err) => {
+                console.log(err);
+            });
         }
     },
     lifetimes: {
+        created() {
+            console.log("Attachecd company component");
+        },
         ready() {
             const app = getApp();
             const listData = app.globalData.companyInfo || [];
-            const newData = [{
+            app.onCompanyLoaded = (companyList) => {
+                const newData = this.properties.hasAll ? [{
+                    id: -1,
+                    name: "全部公司"
+                }] : [];
+                companyList.map((com) => {
+                    newData.push({
+                        name: com.companyName,
+                        id: com.id
+                    });
+                });
+                this.setData({
+                    companyList:newData
+                });
+                console.log("CompanyLoadComplete");
+            }
+            const newData = this.properties.hasAll ? [{
                 id: -1,
                 name: "全部公司"
-            }];
+            }] : [];
             listData.map((com) => {
                 newData.push({
                     name: com.companyName,
@@ -60,18 +99,23 @@ Component({
                 companyList: newData,
                 choseCompany: newData[0]
             });
-            const oldData = wx.getStorageSync('company');
+            let oldData = wx.getStorageSync('company');
+            if(!this.properties.hasAll && oldData.id < 0) {
+                oldData = newData[0];
+            }
             if(!oldData) {
                 if(newData[0]) {
                     wx.setStorageSync('company', newData[0]);
                     this.triggerEvent("change", {
                         data: newData[0]
                     });
+                    this.loadDepartments(oldData);
                 }
             } else {
                 this.setData({
                     choseCompany: oldData
                 });
+                this.loadDepartments(oldData);
             }
         }
     }

@@ -1,9 +1,10 @@
 <CompanyInfo bindchange="onCompanyChange" />
-<Categories data="{{categoryData}}" defaultValue="{{selectedCategory}}" />
+<Categories bindchange="onCategoryChange" data="{{categoryData}}" defaultValue="{{selectedCategory}}" />
 <view class="trademarkList trademarkContainer">
     <view class="tianyi-mobile-content" wx:if="{{hasData}}">
         <view class="tianyi_list_all trademarklistArea" style="height: auto;">
             <view class="trademark_task_list">
+                <scroll-view style="height: 100%;display: block;" scroll-y="auto" scroll-x="hidden" bindscrolltolower="onScrollToBottom"></scroll-view>
                 <block wx:for="{{apiResponse.listData}}" wx:for-item="item" wx:key="apiFor">
                     <view bindtap="onClick" data-regno="{{item.regNo}}" data-id="{{item.id}}">
                         <view>

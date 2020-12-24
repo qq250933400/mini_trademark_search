@@ -34,6 +34,7 @@ Page({
           backgroundColor: '#ffffff',
           frontColor: '#000000',
         });
+        wx.removeStorageSync("toLogin");
     },
 
     /**
@@ -132,6 +133,7 @@ Page({
             verifyCode: this.data.verifyCode
         }).then((resp) => {
             if(app.ajaxHandler(resp)) {
+                wx.setStorageSync('trademarkType', resp.data.trademarkTypes);
                 wx.setStorageSync('mobile', this.data.mobile);
                 app.loadCompany(() => {
                     wx.switchTab({

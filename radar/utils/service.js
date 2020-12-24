@@ -19,7 +19,10 @@ export class Service extends Common {
     send(endPoint, params) {
         var self = this;
         var endPointData = this.getEndPoint(endPoint);
-        if (endPointData) {
+        var token = wx.getStorageSync('token');
+        var pass = this.isEmpty(token) && /\.(login|sendSMS)$/.test(endPoint) || !this.isEmpty(token);
+        // 当登录失效时只允许Login api被调用
+        if (endPointData && pass) {
             return new Promise(function (resolve, reject) {
                 const token = wx.getStorageSync("token");
                 wx.request({
@@ -36,8 +39,10 @@ export class Service extends Common {
                         if(res.statusCode === 200) {
                             const data = res.data || {};
                             const app = getApp();
-                            if(data.statusCode === "NotLogin") {
+                            const toLogin = wx.getStorageSync('toLogin');
+                            if(data.statusCode === "NotLogin" && !toLogin) {
                                 wx.removeStorageSync("token");
+                                wx.setStorageSync('toLogin', true)
                                 app.globalData.token = null;
                                 app.globalData.userInfo = null;
                                 wx.redirectTo({
@@ -66,11 +71,28 @@ export class Service extends Common {
             });
         }
         else {
-            return Promise.reject({
-                status: 500,
-                success: false,
-                message: "Can not find the endPoint from serviceConfig"
-            });
+            if(!endPointData) {
+                return Promise.reject({
+                    status: 500,
+                    success: false,
+                    message: "Can not find the endPoint from serviceConfig"
+                });
+            } else {
+                if(this.isEmpty(token)) {
+                    wx.redirectTo({
+                      url: '/pages/login/index',
+                    });
+                    return Promise.reject({
+                        statusCode: "None"
+                    });
+                } else {
+                    return Promise.reject({
+                        status: 500,
+                        success: false,
+                        message: "Login session expired"
+                    })
+                }
+            }
         }
     }
     getEndPoint = function (endPoint) {

@@ -30,18 +30,25 @@ Component({
             const currentItem = evt.currentTarget.dataset;
             const children = currentItem.children || [];
             evt.cancelBubble = true;
-            console.log(children);
             if(children.length <= 0) {
                 this.setData({
                     choseItem: currentItem,
                     choseTabItem: null,
                     choseTab: null
                 });
-                this.triggerEvent("change", {
-                    data: currentItem
-                }, {
-                    bubbles: false
-                });
+                if(!currentItem.event) {
+                    this.triggerEvent("change", {
+                        data: currentItem
+                    }, {
+                        bubbles: false
+                    });
+                } else {
+                    this.triggerEvent("itemtap", {
+                        data: currentItem
+                    }, {
+                        bubbles: false
+                    });
+                }
             } else {
                 this.setData({
                     visible: true,
@@ -59,7 +66,8 @@ Component({
                 visible: false
             });
             this.triggerEvent("change", {
-                data: itemData
+                data: itemData,
+                parent: this.data.choseTab
             });
         },
         onMaskTap() {
@@ -70,6 +78,7 @@ Component({
     },
     lifetimes: {
         ready: function(opt) {
+            console.log(this.data);
             this.setData({
                 listData: this.properties.data
             });

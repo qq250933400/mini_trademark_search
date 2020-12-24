@@ -1,16 +1,18 @@
 <view class="tianyi-mobile-header-tab">
     <scroll-view scroll-x="auto" scroll-y="hidden">
         <block wx:for="{{listData}}" wx:for-item="cat" wx:key="index">
-            <label bindtap="onItemTab" data-children="{{cat.children}}" data-value="{{cat.value}}" data-title="{{cat.title}}" class="{{(choseItem && choseItem.value === cat.value) ? 'active' : ''}}"><text>{{cat.title}}</text></label>
+            <label bindtap="onItemTab" data-children="{{cat.children}}" data-event="{{cat.event}}" data-value="{{cat.value}}" data-title="{{cat.title}}" class="{{(choseItem && choseItem.value === cat.value) ? 'active' : ''}}"><text>{{cat.title}}</text></label>
         </block>
     </scroll-view>
 </view>
 <view wx:if="{{visible}}" class="CompanyList animationShowMask" bindtap="onMaskTap">
-    <view class="animationShowType">
-        <scroll-view scroll-x="hidden" scroll-y="auto">
-            <block wx:for="{{menuData}}" wx:for-item="com" wx:key="comKey">
-                <label bindtap="onClick" class="{{com.id === choseTabItem.id ? 'active' : ''}}" data-id="{{com.id}}" data-name="{{com.title}}">{{com.title}}</label>
-            </block>
-        </scroll-view>
+    <view class="animationShowType droplistArea">
+        <view>
+            <scroll-view scroll-x="hidden" scroll-y="auto">
+                <block wx:for="{{menuData}}" wx:for-item="com" wx:key="comKey">
+                    <label bindtap="onClick" class="{{com.id === choseTabItem.id ? 'active' : ''}}" data-id="{{com.id}}" data-name="{{com.title}}">{{com.title}}</label>
+                </block>
+            </scroll-view>
+        </view>
     </view>
 </view>

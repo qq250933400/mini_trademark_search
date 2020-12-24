@@ -43,6 +43,18 @@ module.exports = (app) => {
                 allTask: {
                     url: "/min/trademark/radar/task/allList",
                     type: "POST"
+                },
+                departments: {
+                    url: "/min/trademark/radar/index/departments",
+                    type: "POST"
+                },
+                taskFlow: {
+                    url: "/min/trademark/radar/task/flow",
+                    type: "POST"
+                },
+                sendEmail: {
+                    url: "/min/trademark/radar/task/sendEmail",
+                    type: "POST"
                 }
             }
         }

@@ -1,2 +1,8 @@
 @import "../../res/styles/tianyi.wxss";
 @import "../../widget/companyInfo/index.wxss";
+.droplistArea {
+    position: relative;
+}
+.droplistArea>scroll-view {
+    height: 100%;
+}

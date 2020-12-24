@@ -1,17 +1,17 @@
+const { StaticCommon } = require("../../utils/StaticCommon");
+
 // pages/index/index.js
 const searchTypeData = [
     {
-        title: "商标",
-        value: "trademark"
+        title: "全部业务",
+        value: "all"
+    },{
+        title: "按部门",
+        value: "department"
     }, {
-        title: "专利",
-        value: "patent"
-    }, {
-        title: "著作权",
-        value: "copyright"
-    }, {
-        title: "软著",
-        value: "softcopyright"
+        title: "按分类",
+        value: "type",
+        event: true
     }
 ];
 Page({
@@ -25,8 +25,11 @@ Page({
         selectedTypes: [],
         searchType: searchTypeData[0],
         searchIntCls: "",
+        searchPage: 1,
         trademarkType: null,
-        trademarkResult: {}
+        trademarkResult: {},
+        department: null,
+        isAjax: false
     },
 
     /**
@@ -47,7 +50,27 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        this.ajaxLoadData();
+        const app = getApp();
+        if(app.checkLogin) {
+            this.ajaxLoadData();
+            app.checkInitDepartment();
+            app.onDepartmentChange = (data) => {
+                const sourceData = JSON.parse(JSON.stringify(this.data.categoryData || []));
+                const listData = data || [];
+                const newListData = [];
+                listData.map((dData) => {
+                    newListData.push({
+                        id: dData.id,
+                        companyId: dData.companyId,
+                        title: dData.depName
+                    });
+                });
+                sourceData[1].children = newListData;
+                this.setData({
+                    categoryData: sourceData
+                });
+            }
+        }
     },
 
     /**
@@ -85,18 +108,58 @@ Page({
 
     },
     onCategoryChange: function(evt) {
-        this.setData({
-            searchType: evt.detail.data,
-            searchIntCls: ""
-        });
-        this.ajaxLoadData();
+        const data = evt.detail;
+        console.log(data);
+        if(!data.parent  && data.data.value !== "department" && data.data.value !== "type") {
+            this.setData({
+                searchType: evt.detail.data,
+                searchIntCls: "",
+                searchPage: 1,
+                department: null,
+                trademarkResult: {}
+            });
+            this.ajaxLoadData();
+        } else {
+            if(data.parent && data.parent.value === "department") {
+                this.setData({
+                    department: data.data,
+                    searchPage: 1,
+                    trademarkResult: {}
+                });
+                this.ajaxLoadData();
+            } else {
+                if(data.data.value === "department") {
+                    wx.showModal({
+                        content: "当前公司未设置部门信息。",
+                        title: "",
+                        showCancel: false
+                    });
+                }
+            }
+        }
     },
     onTypeChange: function(evt) {
         this.setData({
             trademarkType: evt.detail.data,
             searchIntCls: "",
+            searchPage: 1
         });
         this.ajaxLoadData();
+    },
+    onCategoryItemTap(evt) {
+        if(evt.detail.data && evt.detail.data.value === "type") {
+            this.setData({
+                showTypes: true,
+                department: null
+            });
+        }
+    },
+    onListScrollBottom(evt) {
+        const totalPage = StaticCommon.getValue(this.data, "trademarkResult.totalPage");
+        if(!this.data.isAjax && totalPage > this.data.searchPage) {
+            this.data.searchPage += 1;
+            this.ajaxLoadData();
+        }
     },
     /**
      * 商品分类选择事件
@@ -105,35 +168,56 @@ Page({
     onTTypeChange(evt) {
         const data = evt.detail;
         this.setData({
-            searchIntCls: data.code
+            searchIntCls: data.code,
+            trademarkResult: {}
         });
         this.ajaxLoadData();
     },
     ajaxLoadData: function() {
         const app = getApp();
-        wx.showLoading({
-          title: '加载数据',
-        });
-        this.setData({
-            trademarkResult: {}
-        });
-        app.ajax("trademark.search", {
-            trademarkType: this.data.trademarkType,
-            searchType: this.data.searchType,
-            company: wx.getStorageSync('company'),
-            intCls: this.data.searchIntCls
-        }).then((resp) => {
-            wx.hideLoading();
-            if(app.ajaxHandler(resp)) {
-                this.setData({
-                    trademarkResult: resp.data
-                });
-                console.log(resp.data);
+        if(!this.data.isAjax) {
+            wx.showLoading({
+            title: '加载数据',
+            });
+            if(this.data.searchPage <=1) {
+                this.data.trademarkResult = {};
             }
-        }).catch((err) => {
-            wx.hideLoading();
-            app.ajaxHandler(err)
-        });
+            this.data.isAjax = true;
+            app.ajax("trademark.search", {
+                trademarkType: this.data.trademarkType,
+                searchType: {
+                    title: "商标",
+                    value: "trademark"
+                },
+                department: this.data.department,
+                company: wx.getStorageSync('company'),
+                intCls: this.data.searchIntCls,
+                page: this.data.searchPage
+            }).then((resp) => {
+                wx.hideLoading();
+                if(app.ajaxHandler(resp)) {
+                    const newListData = resp.data.listData || [];
+                    const oldListData = StaticCommon.getValue(this.data,"trademarkResult.listData");
+                    if(this.data.searchPage > 1) {
+                        const AllListData = [...oldListData, ...newListData];
+                        const newObjData = this.data.trademarkResult ? JSON.parse(JSON.stringify(this.data.trademarkResult||{})) : {};
+                        newObjData.listData = AllListData;
+                        this.setData({
+                            trademarkResult: newObjData
+                        });
+                    } else {
+                        this.setData({
+                            trademarkResult: resp.data
+                        });
+                    }
+                }
+                this.data.isAjax = false;
+            }).catch((err) => {
+                this.data.isAjax = false;
+                wx.hideLoading();
+                app.ajaxHandler(err)
+            });
+        }
     },
     onFilterTap:function() {
         this.setData({
@@ -141,10 +225,12 @@ Page({
         });
     },
     onCompanyChange(evt) {
+        this.data.department = null;
+        this.data.searchIntCls = null;
+        this.data.searchPage = 1;
         this.ajaxLoadData();
     },
     onTrademarkTab(evt) {
-        console.log(evt);
         wx.navigateTo({
           url: '/pages/trademark/detail?id=' + evt.currentTarget.dataset.value.Id,
         });
