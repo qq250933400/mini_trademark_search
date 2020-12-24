@@ -106,6 +106,8 @@ Page({
         if(parent && parent.value === "department") {
             const department = evt.detail.data;
             this.data.department = department;
+            this.data.watchTypeData = {};
+            this.data.searchedWatchType = {};
             this.setData({
                 searchPage: 1,
                 apiResponse: null,
@@ -116,6 +118,7 @@ Page({
             this.ajaxLoadData();
         } else if(parent && parent.value === "category") {
             this.data.searchedWatchType = evt.detail.data;
+            this.data.department = {};
             this.setData({
                 searchPage: 1,
                 apiResponse: null,
@@ -130,6 +133,12 @@ Page({
                     title: "",
                     showCancel: false
                 });
+            } else if(evt.detail.data.value === "all") {
+                this.data.watchTypeData = {};
+                this.data.searchedWatchType = {};
+                this.data.department = null;
+                this.data.searchPage = 1;
+                this.ajaxLoadData();
             }
         }
     },
@@ -145,7 +154,6 @@ Page({
             searchPage: 1,
             hasData: false
         });
-        console.log("load ajax");
         this.ajaxLoadData();
     },
     onScrollToBottom() {

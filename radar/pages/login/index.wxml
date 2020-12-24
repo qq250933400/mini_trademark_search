@@ -1,6 +1,6 @@
 <view class="Login">
     <view class="LoginHeader">
-        <image src="/res/basicprofile.jpeg" mode="widthFix" />
+        <image src="/res/icon/logo.jpeg" mode="widthFix" />
     </view>
     <view style="width:90vw;margin: 0 auto;">
         <view class="LoginInput" style="margin-top: 40pt;">

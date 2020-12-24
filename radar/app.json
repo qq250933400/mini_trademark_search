@@ -1,8 +1,9 @@
 {
     "pages": [
+        "pages/watch/watch",
         "pages/task/task",
         "pages/index/index",
-        "pages/watch/watch",
+        
         "pages/trademark/detail",
         "pages/login/index",
         "widget/categories/index",
@@ -12,7 +13,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#e9e9e9",
-        "navigationBarTitleText": "商标查询",
+        "navigationBarTitleText": "江苏广电专属商标库",
         "navigationBarTextStyle": "black"
     },
     "tabBar": {

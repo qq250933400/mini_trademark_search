@@ -83,7 +83,6 @@ Component({
                 this.setData({
                     companyList:newData
                 });
-                console.log("CompanyLoadComplete");
             }
             const newData = this.properties.hasAll ? [{
                 id: -1,

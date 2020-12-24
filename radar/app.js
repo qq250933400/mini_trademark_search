@@ -11,21 +11,23 @@ App({
         this.globalData.service = new Service(this);
         this.globalData.i18n = new I18n(i18nConfigData);
         this.globalData.i18n.setLocale("zh");
-        this.loadCompany();
+        this.checkConnect().then(() => {
+            this.loadCompany();
+        });
     },
     ajax: function(endPoint, params) {
         const obj = this.globalData.service;
         obj.setConfig(this.globalData.serviceConfig);
         return obj.send(endPoint, params);
     },
-    ajaxHandler(data, isError = false, callback = null) {
+    ajaxHandler(data, silent = false, callback = null) {
         wx.hideLoading();
         if(data && /^200$/.test(data.statusCode)) {
             return true;
         } else {
             if(!/None/.test(data.statusCode)) {
                 const msg = data.info || data.message || "未知错误";
-                wx.showModal({
+                !silent && wx.showModal({
                     content: msg,
                     showCancel: false,
                     confirmText: "关闭",
@@ -33,6 +35,7 @@ App({
                         typeof callback === "function" && callback();
                     }
                 });
+                silent && console.error(data);
                 return false;
             } else {
                 return false;
@@ -66,6 +69,17 @@ App({
     checkLogin() {
         const token = wx.getStorageSync('token');
         return !StaticCommon.isEmpty(token);
+    },
+    checkConnect() {
+        return new Promise((resolve, reject) => {
+            this.ajax("trademark.connect").then((resp) => {
+                if(this.ajaxHandler(resp, true)) {
+                    resolve({});
+                }
+            }).catch(() => {
+                reject({});
+            });
+        });
     },
     checkInitDepartment() {
         const defaultDepartment = wx.getStorageSync('departments');

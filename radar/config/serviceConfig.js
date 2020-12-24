@@ -55,6 +55,10 @@ module.exports = (app) => {
                 sendEmail: {
                     url: "/min/trademark/radar/task/sendEmail",
                     type: "POST"
+                },
+                connect: {
+                    url: "/min/trademark/radar/index/connect",
+                    type: "POST"
                 }
             }
         }

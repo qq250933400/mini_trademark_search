@@ -51,7 +51,7 @@ Page({
      */
     onShow: function () {
         const app = getApp();
-        if(app.checkLogin) {
+        app.checkConnect().then(() => {
             this.ajaxLoadData();
             app.checkInitDepartment();
             app.onDepartmentChange = (data) => {
@@ -70,7 +70,7 @@ Page({
                     categoryData: sourceData
                 });
             }
-        }
+        });
     },
 
     /**
@@ -109,7 +109,6 @@ Page({
     },
     onCategoryChange: function(evt) {
         const data = evt.detail;
-        console.log(data);
         if(!data.parent  && data.data.value !== "department" && data.data.value !== "type") {
             this.setData({
                 searchType: evt.detail.data,
