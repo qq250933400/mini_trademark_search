@@ -20,6 +20,7 @@
                                 </view>
                             </view>
                         </view>
+                        <label class="trademarkItemTip" wx:if="{{trademark.AppDateEnable.tip}}">{{trademark.AppDateEnable.tipText}}</label>
                     </view>
                 </block>
             </scroll-view>

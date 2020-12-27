@@ -1,9 +1,10 @@
 {
     "pages": [
+        "pages/index/index",
+        "pages/search/index",
+        "pages/searchDetail/detail",
         "pages/watch/watch",
         "pages/task/task",
-        "pages/index/index",
-        
         "pages/trademark/detail",
         "pages/login/index",
         "widget/categories/index",
@@ -36,6 +37,12 @@
                 "selectedIconPath": "/res/icon/task_checked.png",
                 "pagePath": "pages/task/task",
                 "text": "业务进度"
+            },
+            {
+                "iconPath": "/res/icon/icon_search.png",
+                "selectedIconPath": "/res/icon/icon_search_checked.png",
+                "pagePath": "pages/search/index",
+                "text": "商标搜索"
             }
         ]
     },

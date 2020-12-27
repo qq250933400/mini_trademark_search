@@ -3,13 +3,13 @@ const { StaticCommon } = require("../../utils/StaticCommon");
 // pages/index/index.js
 const searchTypeData = [
     {
-        title: "全部业务",
+        title: "按公司",
         value: "all"
     },{
         title: "按部门",
         value: "department"
     }, {
-        title: "按分类",
+        title: "商品分类",
         value: "type",
         event: true
     }
@@ -123,6 +123,7 @@ Page({
                 this.setData({
                     department: data.data,
                     searchPage: 1,
+                    searchIntCls: null,
                     trademarkResult: {}
                 });
                 this.ajaxLoadData();
@@ -196,7 +197,7 @@ Page({
                 wx.hideLoading();
                 if(app.ajaxHandler(resp)) {
                     const newListData = resp.data.listData || [];
-                    const oldListData = StaticCommon.getValue(this.data,"trademarkResult.listData");
+                    const oldListData = StaticCommon.getValue(this.data,"trademarkResult.listData") || [];
                     if(this.data.searchPage > 1) {
                         const AllListData = [...oldListData, ...newListData];
                         const newObjData = this.data.trademarkResult ? JSON.parse(JSON.stringify(this.data.trademarkResult||{})) : {};

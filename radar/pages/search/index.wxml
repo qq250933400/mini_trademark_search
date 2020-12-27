@@ -1,0 +1,74 @@
+<view class="home-search">
+    <view>
+        <view>
+            <image src="/res/search.png"></image>
+            <input type="text" focus="{{needSetFocus}}" bindinput="handleOnSearchValueInput" value="{{searchValue}}" placeholder="{{i18n.searchPlaceHolder}}"></input>
+        </view>
+        <button bindtap="bindOnButtonSearchTap">{{i18n.btnText}}</button>
+    </view>
+</view>
+<view class="home-nav">
+    <label bindtap="bindSearchSameModeTap" class="{{searchLikeMode == 0 ? 'active': ''}}">
+        <text>{{i18n.menuSameName}}</text>
+        <image src="/res/up.png"></image>
+    </label>
+    <label bindtap="bindSearchLikeModeTap" class="{{searchLikeMode == 1 ? 'active': ''}}">
+        <text>{{i18n.menuLikeName}}</text>
+        <image src="/res/up.png"></image>
+    </label>
+    <button bindtap="handleOnShowTypeTap"><image src="/res/types.png"></image></button>
+</view>
+<view class="home-context">
+    <view wx:if="{{listData.length <= 0}}" class="home-back">
+        <image src="/res/tLogo.png"></image>
+        <label>{{i18n.motto}}</label>
+    </view>
+    <scroll-view bindscrolltolower="onScrollToNextPage" wx:if="{{listData.length > 0}}" style="width: 100%;height: 100%;" scroll-x="hidden" scroll-y="auto">
+        <view class="home-context-area">
+                <block wx:for="{{listData}}" wx:for-item="item" wx:key="key">
+                    <view data-id="{{item.Id}}" bindtap="handleOnListItemTap">
+                        <view>
+                            <image src="{{item.TmImageUrl}}"></image>
+                            <label>
+                                <text class="itemTitle">{{item.TmName}}</text>
+                                <text class="itemNo">{{item.TmNo}}</text>
+                                <text class="itemAL">{{item.ApplicantCN}}</text>
+                            </label>
+                            <text>{{item.NiceClass}}</text>
+                            <text class="list-status">{{item.tmStatusText}}</text>
+                        </view>
+                    </view>
+                </block>
+            <label wx:if="{{page>=pageCount && listData.length>0}}">没有更多数据</label>
+        </view>
+    </scroll-view>
+</view>
+<!--商标分类选择页面-->
+<view class="home-types-list animationShowMask" wx:if="{{showTypes}}">
+    <view class="animationShowType">
+        <view>
+            <label>
+                <text>{{i18n.trademarkType}}</text>
+                <button bindtap="handleOnTypeCloseTap">×</button>
+            </label>
+            <view class="home-types-context">
+                <block wx:for="{{typesData}}" wx:key="key" wx:for-item="type">
+                    <view bindtap="handleOnTypeTap" data-code="{{type.code}}" data-title="{{type.title}}" class="{{selectType.code == type.code ? 'active' : ''}}">
+                        <label>
+                            <text>{{type.code}} {{type.title}}</text>
+                        </label>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view wx:if="{{showLogin}}" class="index_login_div">
+    <view>
+        <button bindtap="handleOnStartLoginTap" open-type="getUserInfo">
+            <image src="/res/logo.jpeg"></image>
+        </button>
+        <label>点击授权登录</label>
+    </view>
+</view>

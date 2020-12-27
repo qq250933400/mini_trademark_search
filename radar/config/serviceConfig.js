@@ -59,6 +59,14 @@ module.exports = (app) => {
                 connect: {
                     url: "/min/trademark/radar/index/connect",
                     type: "POST"
+                },
+                trademarkSearch: {
+                    url: "/mini/trademark/search/index",
+                    type: "POST"
+                },
+                SBWDetail: {
+                    url: "/mini/trademark/search/detail",
+                    type: "POST"
                 }
             }
         }

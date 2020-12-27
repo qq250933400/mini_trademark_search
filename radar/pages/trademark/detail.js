@@ -5,7 +5,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        id: ""
+        id: "",
+        api: ""
     },
 
     /**
@@ -13,7 +14,8 @@ Page({
      */
     onLoad: function (options) {
         this.setData({
-            id: options.id
+            id: options.id,
+            api: options.api
         });
     },
 
@@ -29,8 +31,9 @@ Page({
      */
     onShow: function () {
         const app = getApp();
+        const endPointId = /shebiaowang/.test(this.data.api) ? "trademark.SBWDetail" : "trademark.trademarkDetail";
         wx.showLoading({title: "加载数据"});
-        app.ajax("trademark.trademarkDetail", {
+        app.ajax(endPointId, {
             id: this.data.id
         }).then((resp) => {
             if(app.ajaxHandler(resp)) {

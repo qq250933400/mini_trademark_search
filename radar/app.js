@@ -13,6 +13,8 @@ App({
         this.globalData.i18n.setLocale("zh");
         this.checkConnect().then(() => {
             this.loadCompany();
+        }).catch(() => {
+            console.error("____")
         });
     },
     ajax: function(endPoint, params) {

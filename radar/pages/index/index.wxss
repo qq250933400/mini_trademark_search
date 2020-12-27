@@ -14,3 +14,20 @@
 .trademarklistArea>scroll-view {
     height: 100%;
 }
+
+.trademarkItemTip {
+    display: block;
+    width: 80pt;
+    height: 15pt;
+    line-height: 15pt;
+    background: red;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: rotate(45deg) translate(25pt, -15pt);
+    font-size: 8pt;
+    box-shadow: 0 0 5pt rgba(10,10,10,.2);
+    text-shadow: 0 0 2pt rgba(10,10,10,.2);
+}

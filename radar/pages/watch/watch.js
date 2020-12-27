@@ -5,13 +5,16 @@ const searchTypeData = [
     {
         title: "全部监控",
         value: "all"
-    }, {
-        title: "按部门",
-        value: "department"
-    }, {
+    },
+    {
         title: "监控类型",
         value: "category"
-    }
+    },
+    // {
+    //     title: "按部门",
+    //     value: "department",
+    //     visible: false
+    // }
 ];
 Page({
 
@@ -59,7 +62,7 @@ Page({
                     title: dData.depName
                 });
             });
-            sourceData[1].children = newListData;
+           // sourceData[1].children = newListData;
             this.setData({
                 categoryData: sourceData
             });
@@ -186,7 +189,7 @@ Page({
                     const listData = StaticCommon.getValue(resp.data, "listData") || [];
                     let respData = resp.data;
                     if(shouldGetWatchType) {
-                        newData[2].children = watchTypeData;
+                        newData[1].children = watchTypeData;
                     }
                     if(this.data.searchPage > 1) {
                         const oldData = JSON.parse(JSON.stringify(this.data.apiResponse));

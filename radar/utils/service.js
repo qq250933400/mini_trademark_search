@@ -36,32 +36,37 @@ export class Service extends Common {
                     data: params,
                     dataType: "json",
                     success: function (res) {
-                        if(res.statusCode === 200) {
-                            const data = res.data || {};
-                            const app = getApp();
-                            const toLogin = wx.getStorageSync('toLogin');
-                            if(data.statusCode === "NotLogin" && !toLogin) {
-                                wx.removeStorageSync("token");
-                                wx.setStorageSync('toLogin', true)
-                                app.globalData.token = null;
-                                app.globalData.userInfo = null;
-                                wx.redirectTo({
-                                  url: '/pages/login/index',
-                                });
-                                reject(data);
-                            } else {
-                                const token = wx.getStorageSync("token");
-                                const newToken = self.getValue(data, "data.token");
-                                if(self.isEmpty(token)) {
-                                    wx.setStorageSync('token', newToken);
+                        try{
+                            if(res.statusCode === 200) {
+                                const data = res.data || {};
+                                const app = getApp();
+                                const toLogin = wx.getStorageSync('toLogin');
+                                if(data.statusCode === "NotLogin" && !toLogin) {
+                                    wx.removeStorageSync("token");
+                                    wx.setStorageSync('toLogin', true);
+                                    wx.clearStorageSync();
+                                    app.globalData.token = null;
+                                    app.globalData.userInfo = null;
+                                    wx.redirectTo({
+                                    url: '/pages/login/index',
+                                    });
+                                    reject(data);
+                                } else {
+                                    const token = wx.getStorageSync("token");
+                                    const newToken = self.getValue(data, "data.token");
+                                    if(self.isEmpty(token)) {
+                                        wx.setStorageSync('token', newToken);
+                                    }
+                                    resolve(res.data);
                                 }
-                                resolve(res.data);
+                            } else {
+                                reject({
+                                    status: res.statusCode,
+                                    message: res.errMsg
+                                });
                             }
-                        } else {
-                            reject({
-                                status: res.statusCode,
-                                message: res.errMsg
-                            });
+                        } catch(e) {
+                            console.error(e);
                         }
                     },
                     fail: function (err) {
@@ -79,6 +84,7 @@ export class Service extends Common {
                 });
             } else {
                 if(this.isEmpty(token)) {
+                    wx.clearStorageSync();
                     wx.redirectTo({
                       url: '/pages/login/index',
                     });
