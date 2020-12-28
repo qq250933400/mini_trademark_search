@@ -1,4 +1,5 @@
 // pages/login/index.js
+import { StaticCommon } from "../../utils/StaticCommon";
 Page({
 
     /**
@@ -133,16 +134,44 @@ Page({
             verifyCode: this.data.verifyCode
         }).then((resp) => {
             if(app.ajaxHandler(resp)) {
-                wx.setStorageSync('trademarkType', resp.data.trademarkTypes);
-                wx.setStorageSync('mobile', this.data.mobile);
-                app.loadCompany(() => {
-                    wx.switchTab({
-                        url: '/pages/index/index',
+                try{
+                    const token = resp.data.token;
+                    wx.setStorageSync('trademarkType', resp.data.trademarkTypes);
+                    wx.setStorageSync('mobile', this.data.mobile);
+                    if(!StaticCommon.isEmpty(token)) {
+                        wx.setStorageSync('token', token);
+                    }
+                    app.loadCompany(() => {
+                        wx.switchTab({
+                            url: '/pages/index/index',
+                        });
                     });
-                });
+                }catch(e) {
+                    console.error(e);
+                }
             }
         }).catch((err) => {
             app.ajaxHandler(err, true);
+        });
+    },
+    onMobileTap() {
+        this.setData({
+            mobileFocus: true
+        });
+    },
+    onMobileBlur() {
+        this.setData({
+            mobileFocus: false
+        });
+    },
+    onVerifyCodeTap() {
+        this.setData({
+            verifyCodeFocus: true
+        });
+    },
+    onVerifyCodeInputBlur() {
+        this.setData({
+            verifyCodeFocus: false
         });
     }
 })

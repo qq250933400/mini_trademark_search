@@ -52,23 +52,30 @@ Page({
     onShow: function () {
         const app = getApp();
         app.checkConnect().then(() => {
-            this.ajaxLoadData();
-            app.checkInitDepartment();
-            app.onDepartmentChange = (data) => {
-                const sourceData = JSON.parse(JSON.stringify(this.data.categoryData || []));
-                const listData = data || [];
-                const newListData = [];
-                listData.map((dData) => {
-                    newListData.push({
-                        id: dData.id,
-                        companyId: dData.companyId,
-                        title: dData.depName
+            let isLoadData = false;
+            if(app.checkInitDepartment()) {
+                app.onDepartmentChange = (data) => {
+                    const sourceData = JSON.parse(JSON.stringify(this.data.categoryData || []));
+                    const listData = data || [];
+                    const newListData = [];
+                    listData.map((dData) => {
+                        newListData.push({
+                            id: dData.id,
+                            companyId: dData.companyId,
+                            title: dData.depName
+                        });
                     });
-                });
-                sourceData[1].children = newListData;
-                this.setData({
-                    categoryData: sourceData
-                });
+                    sourceData[1].children = newListData;
+                    this.setData({
+                        categoryData: sourceData
+                    });
+                    if(!isLoadData) {
+                        this.ajaxLoadData();
+                    }
+                    isLoadData = true;
+                }
+            } else {
+                this.ajaxLoadData();
             }
         });
     },

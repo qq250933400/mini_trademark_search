@@ -13,8 +13,8 @@ App({
         this.globalData.i18n.setLocale("zh");
         this.checkConnect().then(() => {
             this.loadCompany();
-        }).catch(() => {
-            console.error("____")
+        }).catch((err) => {
+            console.error(err);
         });
     },
     ajax: function(endPoint, params) {
@@ -60,6 +60,8 @@ App({
             }).catch((err) => {
                 this.ajaxHandler(err, true);
             });
+        } else {
+            fn();
         }
     },
     onCompanyLoaded(){
@@ -88,6 +90,7 @@ App({
         if(!defaultDepartment || defaultDepartment.length<=0) {
             const company = wx.getStorageSync('company');
             this.loadDepartments(company);
+            return true;
         }
     },
     loadDepartments(comany) {

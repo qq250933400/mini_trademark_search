@@ -3,13 +3,13 @@
         <image src="/res/icon/logo.jpeg" mode="widthFix" />
     </view>
     <view style="width:90vw;margin: 0 auto;">
-        <view class="LoginInput" style="margin-top: 40pt;">
+        <view bindtap="onMobileTap" class="LoginInput" style="margin-top: 40pt;">
             <view>
                 <text>手机号码</text>
                 <input type="number" bindinput="onMobileInput"/>
             </view>
         </view>
-        <view class="LoginInput LoginVerifyCode">
+        <view bindtap="{{onVerifyCodeTap}}" class="LoginInput LoginVerifyCode">
             <view>
                 <text>验证码</text>
                 <input type="number" bindinput="onVerifyCodeInput" />
