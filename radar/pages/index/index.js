@@ -75,6 +75,20 @@ Page({
                     isLoadData = true;
                 }
             } else {
+                const departments = wx.getStorageSync('departments') || [];
+                const sourceData = JSON.parse(JSON.stringify(this.data.categoryData || []));
+                const newListData = [];
+                departments.map((dData) => {
+                    newListData.push({
+                        id: dData.id,
+                        companyId: dData.companyId,
+                        title: dData.depName
+                    });
+                });
+                sourceData[1].children = newListData;
+                this.setData({
+                    categoryData: sourceData
+                });
                 this.ajaxLoadData();
             }
         });
